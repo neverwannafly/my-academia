@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chess on Rails - Play and Learn Chess</title>
+    <meta description="Play and learn chess at chess on rails. See yourself progress through ranks and become a better player with time.">
+    <meta property="og:title" content="Chess on Rails - Play and Learn Chess" />
+    <meta property="og:description" content="Play and learn chess at chess on rails. See yourself progress through ranks and become a better player with time." />
+    <meta property="og:url" content="https://chessonrails.com">
+    <meta property="og:image" content="https://elasticbeanstalk-ap-south-1-707854657814.s3.ap-south-1.amazonaws.com/assets/chess-on-rails-cover.png">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <%= favicon_link_tag %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all' %>
+    <%= javascript_pack_tag 'application' %>
+  </head>
+
+  <body>
+    <%= yield %>
+  </body>
+</html>

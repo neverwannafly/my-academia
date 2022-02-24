@@ -1,0 +1,18 @@
+<div id="react-root"></div>
+
+<script>
+  window.CHESS_ON_RAILS = {
+    user: {
+      username: '<%= @current_user&.username %>',
+      name: '<%= @current_user&.name %>',
+      isLoggedin: <%= @current_user.present? %>,
+      time: '<%= DateTime.now.to_s %>'
+    },
+  };
+
+  window.ENV_VARS = {
+    mode: '<%= Rails.env %>'
+  };
+</script>
+
+<%= javascript_pack_tag 'index' %>
