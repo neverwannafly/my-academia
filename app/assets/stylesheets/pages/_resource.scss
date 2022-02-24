@@ -1,0 +1,27 @@
+.resource {
+  &__item-container {
+    margin: 1rem 0;
+  }
+
+  &__item {
+    @include flex-row;
+
+    justify-content: space-between;
+    align-items: center;
+    margin: 1rem 0;
+    padding: 1rem;
+    cursor: pointer;
+  }
+
+  &__header {
+    font-weight: bold;
+
+    &--problem {
+      color: $success-color;
+    }
+
+    &--article {
+      color: $danger-color;
+    }
+  }
+}

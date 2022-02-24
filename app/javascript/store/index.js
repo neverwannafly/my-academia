@@ -3,13 +3,14 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 
-import home from './home';
 import user from './user';
 import toast from './toast';
-import puzzles from './puzzles';
+import classroom from './classroom';
+import resources from './resources';
+import quote from './quote';
 
 const reducers = combineReducers({
-  home, user, toast, puzzles,
+  user, toast, classroom, resources, quote,
 });
 
 const middlewares = [thunk];

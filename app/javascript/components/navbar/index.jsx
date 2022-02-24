@@ -1,5 +1,6 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -13,6 +14,7 @@ import Search from './Search';
 
 function Header() {
   const history = useHistory();
+  const { data: { title } } = useSelector((state) => state.classroom);
 
   return (
     <Box sx={{ zIndex: 101 }}>
@@ -38,7 +40,7 @@ function Header() {
               role="presentation"
               onClick={() => history.push('/')}
             >
-              Chess on Rails
+              {title || 'My Classroom'}
             </div>
           </Typography>
           <Search />

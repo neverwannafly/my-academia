@@ -3,7 +3,7 @@ class ApiRequest
   UNSUPPORTED_HTTP_REQUEST_ERROR = "This request type isnt supported. Use #{ApiRequest::SUPPORTED_REQUESTS}"
 
   class << self
-    def request(method:, body: {}, url:)
+    def request(method:, body: {}, url:, headers: {})
       raise ApiRequest::UNSUPPORTED_HTTP_REQUEST_ERROR unless ApiRequest::SUPPORTED_REQUESTS.include?(method)
 
       url = create_hit_url(url, body) if method == :get
@@ -12,6 +12,7 @@ class ApiRequest
       request = request_object(method, url)
 
       request.body = body.to_json unless method == :get
+      headers.keys.each { |key| request[key] = headers[key] }
 
       http.request(request)
     end

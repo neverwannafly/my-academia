@@ -50,7 +50,7 @@ function useForm({
       // is not found or the password is wrong
       if (Object.keys(response).includes('error')) {
         dispatch(setToast({
-          message: 'Invalid username or password',
+          message: response.error,
           type: 'error',
         }));
         return;

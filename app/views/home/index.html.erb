@@ -1,13 +1,14 @@
 <div id="react-root"></div>
 
 <script>
-  window.CHESS_ON_RAILS = {
+  window.MY_CLASSROOM = {
     user: {
       username: '<%= @current_user&.username %>',
       name: '<%= @current_user&.name %>',
       isLoggedin: <%= @current_user.present? %>,
       time: '<%= DateTime.now.to_s %>'
     },
+    classroom: <%= raw @current_user&.classrooms&.first&.to_json || {} %>
   };
 
   window.ENV_VARS = {

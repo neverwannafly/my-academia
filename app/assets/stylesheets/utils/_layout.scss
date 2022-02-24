@@ -13,8 +13,24 @@
   justify-content: center;
 }
 
+.column {
+  @include flex-col;
+}
+
+.row {
+  @include flex-row;
+}
+
+.space-between {
+  justify-content: space-between;
+}
+
 .p-20 {
   padding: 2rem;
+}
+
+.p-10 {
+  padding: 1rem;
 }
 
 .p-h-20 {
@@ -23,6 +39,18 @@
 
 .m-20 {
   margin: 2rem;
+}
+
+.m-t-20 {
+  margin-top: 2rem;
+}
+
+.m-t-10 {
+  margin-top: 1rem;
+}
+
+.m-b-20 {
+  margin-bottom: 2rem;
 }
 
 .container {

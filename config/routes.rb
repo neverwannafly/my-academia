@@ -6,12 +6,11 @@ Rails.application.routes.draw do
     resources :registrations, only: %i[create]
     resources :sessions, only: %i[create destroy]
     resources :health_check, only: %i[index]
-    resources :evaluation, only: %i[index]
 
-    namespace :puzzles do
-      get 'random-puzzle', action: 'random_puzzle'
-      post 'evaluate/:slug', action: 'evaluate'
-      get ':slug', action: 'show'
+    resources :classroom, only: %i[index] do
+      get '/resources', action: 'resources'
+      get '/quote', action: 'quote'
+      get '/comments', action: 'comments'
     end
   end
 
