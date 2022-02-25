@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
 import Modal from './Modal';
 
-function FAB() {
+function FAB({ mode }) {
   const [isOpen, setOpen] = useState(false);
+  const handleOpen = useCallback(() => setOpen(true), []);
+  const handleClose = useCallback(() => setOpen(false), []);
 
   return (
     <>
       <div
         style={{
-          position: 'absolute',
+          position: 'fixed',
           bottom: 20,
           right: 20,
         }}
@@ -21,14 +23,15 @@ function FAB() {
         <Fab
           color="secondary"
           aria-label="add"
-          onClick={() => setOpen(true)}
+          onClick={handleOpen}
         >
           <AddIcon />
         </Fab>
       </div>
       <Modal
         isOpen={isOpen}
-        handleClose={() => setOpen(false)}
+        handleClose={handleClose}
+        mode={mode}
       />
     </>
   );

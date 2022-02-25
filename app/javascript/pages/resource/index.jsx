@@ -1,10 +1,11 @@
 import React, { useEffect, useMemo } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useParams } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 
 import withLogin from '@app/hoc/withLogin';
 import { loadResources } from '@app/store/resources';
+import FAB from '@app/components/fab';
+
 import Container from './Container';
 
 function ResourcePage() {
@@ -28,9 +29,12 @@ function ResourcePage() {
   }
 
   return (
-    <div className="container m-t-20">
-      <Container isLoaded={isLoaded} resource={resource} />
-    </div>
+    <>
+      <div className="container m-t-20">
+        <Container isLoaded={isLoaded} resource={resource} />
+      </div>
+      <FAB mode="comment" />
+    </>
   );
 }
 

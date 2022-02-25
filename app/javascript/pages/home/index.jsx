@@ -22,7 +22,7 @@ function HomePage() {
         <Quote />
         <ResourcePresenter />
       </div>
-      <FAB />
+      <FAB mode="resource" />
     </>
   );
 }

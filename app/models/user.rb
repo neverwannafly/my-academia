@@ -6,4 +6,5 @@ class User < ApplicationRecord
 
   has_many :classroom_users
   has_many :classrooms, :through => :classroom_users
+  has_many :comments
 end

@@ -35,9 +35,9 @@ function Container({ isLoaded, resource }) {
             </div>
           </Link>
           <Chip
-            label={resource.status ? 'Complete 🥳' : 'Pending'}
+            label={resource.status !== 'pending' ? 'Complete 🥳' : 'Pending'}
             variant="outlined"
-            color={resource.status ? 'success' : 'warning'}
+            color={resource.status !== 'pending' ? 'success' : 'warning'}
           />
         </div>
         <Divider />
@@ -46,9 +46,7 @@ function Container({ isLoaded, resource }) {
         </div>
       </Paper>
       <h2 className="m-t-10">Discuss</h2>
-      <Paper elevation={3} className="column m-t-10">
-        <Discuss />
-      </Paper>
+      <Discuss />
     </>
   );
 }

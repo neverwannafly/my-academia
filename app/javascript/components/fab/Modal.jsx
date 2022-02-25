@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Modal, Paper } from '@mui/material';
-import MdEditor from '@app/lib/MdEditor';
+import Form from './forms/index.jsx';
 
-function FabModal({ isOpen, handleClose }) {
-  const [value, setValue] = useState('');
-
+function FabModal({ isOpen, handleClose, mode }) {
   return (
     <Modal
       open={isOpen}
@@ -16,8 +14,7 @@ function FabModal({ isOpen, handleClose }) {
         style={{ width: '80%', margin: '0 auto', marginTop: '10rem' }}
         className="p-20"
       >
-        <h1>Hello World</h1>
-        <MdEditor value={value} setValue={setValue} />
+        <Form handleClose={handleClose} mode={mode} />
       </Paper>
     </Modal>
   );

@@ -23,7 +23,7 @@ function Header({ title, status }) {
         </Link>
         <Typography color="text.primary">{title}</Typography>
       </Breadcrumbs>
-      {!status && (
+      {status === 'pending' && (
         <Button ref={ref} variant="contained" onClick={handleClick}>
           Mark as Complete
         </Button>

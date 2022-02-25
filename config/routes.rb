@@ -8,9 +8,11 @@ Rails.application.routes.draw do
     resources :health_check, only: %i[index]
 
     resources :classroom, only: %i[index] do
-      get '/resources', action: 'resources'
       get '/quote', action: 'quote'
-      get '/comments', action: 'comments'
+      get '/resources', action: 'resources'
+      post '/resources', action: 'create_resource'
+      get '/:resource_id/comments', action: 'comments'
+      post '/:resource_id/comments', action: 'add_comment'
     end
   end
 

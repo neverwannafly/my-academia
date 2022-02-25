@@ -31,9 +31,9 @@ function Resource({
           {title}
         </div>
         <Chip
-          label={status ? 'Complete 🥳' : 'Pending'}
+          label={status !== 'pending' ? 'Complete 🥳' : 'Pending'}
           variant="outlined"
-          color={status ? 'success' : 'warning'}
+          color={status !== 'pending' ? 'success' : 'warning'}
         />
       </div>
     </Paper>
