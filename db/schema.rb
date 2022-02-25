@@ -12,7 +12,10 @@
 
 ActiveRecord::Schema.define(version: 2022_02_24_131222) do
 
-  create_table "bookmarks", charset: "utf8mb4", force: :cascade do |t|
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
+  create_table "bookmarks", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "classroom_resource_id"
     t.integer "status"
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_131222) do
     t.index ["user_id"], name: "index_bookmarks_on_user_id"
   end
 
-  create_table "classroom_resources", charset: "utf8mb4", force: :cascade do |t|
+  create_table "classroom_resources", force: :cascade do |t|
     t.bigint "classroom_id"
     t.integer "resource_type"
     t.string "link"
@@ -34,7 +37,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_131222) do
     t.index ["classroom_id"], name: "index_classroom_resources_on_classroom_id"
   end
 
-  create_table "classroom_users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "classroom_users", force: :cascade do |t|
     t.bigint "classroom_id"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
@@ -43,13 +46,13 @@ ActiveRecord::Schema.define(version: 2022_02_24_131222) do
     t.index ["user_id"], name: "index_classroom_users_on_user_id"
   end
 
-  create_table "classrooms", charset: "utf8mb4", force: :cascade do |t|
+  create_table "classrooms", force: :cascade do |t|
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
 
-  create_table "comments", charset: "utf8mb4", force: :cascade do |t|
+  create_table "comments", force: :cascade do |t|
     t.bigint "users_id"
     t.string "association_type"
     t.integer "association_id"
@@ -62,7 +65,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_131222) do
     t.index ["users_id"], name: "index_comments_on_users_id"
   end
 
-  create_table "likes", charset: "utf8mb4", force: :cascade do |t|
+  create_table "likes", force: :cascade do |t|
     t.bigint "users_id"
     t.string "association_type"
     t.integer "association_id"
@@ -73,7 +76,7 @@ ActiveRecord::Schema.define(version: 2022_02_24_131222) do
     t.index ["users_id"], name: "index_likes_on_users_id"
   end
 
-  create_table "users", charset: "utf8mb4", force: :cascade do |t|
+  create_table "users", force: :cascade do |t|
     t.string "name"
     t.string "username"
     t.string "email"
