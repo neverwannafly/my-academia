@@ -1,11 +1,10 @@
-import React, { useRef } from 'react';
+import React, { useRef, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Breadcrumbs, Button, Typography } from '@mui/material';
 import party from 'party-js';
-import { useCallback } from 'react';
 
-function Header({ title, type }) {
+function Header({ title, status }) {
   const ref = useRef();
 
   const handleClick = useCallback(() => {
@@ -24,7 +23,7 @@ function Header({ title, type }) {
         </Link>
         <Typography color="text.primary">{title}</Typography>
       </Breadcrumbs>
-      {!type && (
+      {!status && (
         <Button ref={ref} variant="contained" onClick={handleClick}>
           Mark as Complete
         </Button>
