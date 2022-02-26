@@ -14,7 +14,7 @@ function CommentForm({
   const [title, setTitle] = useState(initialTitle);
   const [content, setContent] = useState(initialContent);
   const { data: { id } } = useSelector((state) => state.classroom);
-  const { resourceId } = useParams();
+  const { resourceId, resourceType } = useParams();
   const dispatch = useDispatch();
 
   const handleSubmit = useCallback(async (event) => {
@@ -23,10 +23,11 @@ function CommentForm({
     dispatch(createComment(
       id,
       resourceId,
+      resourceType,
       { title, content },
       handleClose,
     ));
-  }, [dispatch, id, title, content, resourceId, handleClose]);
+  }, [dispatch, id, title, content, resourceId, handleClose, resourceType]);
 
   return (
     <form className="column" onSubmit={handleSubmit}>

@@ -1,9 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { getResourceType } from '@app/utils/classroom';
 import {
-  Chip, Divider, Link, Paper,
+  Chip, CircularProgress, Divider, Link, Paper,
 } from '@mui/material';
 
 import Header from './Header';
@@ -11,7 +10,7 @@ import Discuss from './Discuss';
 
 function Container({ isLoaded, resource }) {
   if (!isLoaded) {
-    return <h1>Loading!</h1>;
+    return <CircularProgress className="margin-auto" color="secondary" />;
   }
 
   return (
@@ -27,17 +26,17 @@ function Container({ isLoaded, resource }) {
             <div className={
               classNames(
                 'resource__header',
-                `resource__header--${getResourceType(resource.resource_type)}`,
+                `resource__header--${resource.resource_type}`,
               )
             }
             >
-              {`${getResourceType(resource.resource_type).toUpperCase()} LINK`}
+              {`${resource.resource_type.toUpperCase()} LINK`}
             </div>
           </Link>
           <Chip
-            label={resource.status !== 'pending' ? 'Complete 🥳' : 'Pending'}
+            label={resource.score ? 'Complete 🥳' : 'Pending'}
             variant="outlined"
-            color={resource.status !== 'pending' ? 'success' : 'warning'}
+            color={resource.score ? 'success' : 'warning'}
           />
         </div>
         <Divider />

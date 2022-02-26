@@ -8,14 +8,14 @@ import { Avatar, Divider, Paper } from '@mui/material';
 import { readableDate } from '@app/utils/datetime';
 
 function Discuss() {
-  const { resourceId } = useParams();
+  const { resourceId, resourceType } = useParams();
   const dispatch = useDispatch();
   const { data } = useSelector((state) => state.comments);
   const { data: { id } } = useSelector((state) => state.classroom);
 
   useEffect(() => {
-    dispatch(loadComments(id, resourceId));
-  }, [dispatch, id, resourceId]);
+    dispatch(loadComments(id, resourceId, resourceType));
+  }, [dispatch, id, resourceId, resourceType]);
 
   if (!(resourceId in data)) {
     return null;

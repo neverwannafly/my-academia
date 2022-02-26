@@ -18,7 +18,7 @@ function HomePage() {
 
   return (
     <>
-      <div className="container m-t-20">
+      <div className="container">
         <Quote />
         <ResourcePresenter />
       </div>

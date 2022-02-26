@@ -13,14 +13,14 @@ const initialState = {
   error: null,
 };
 
-export function loadComments(classroomId, resourceId) {
+export function loadComments(classroomId, resourceId, resourceType) {
   return async (dispatch, getState) => {
     const { isLoading } = getState().comments;
     if (isLoading) return;
 
     dispatch({ type: COMMENT_INIT });
     try {
-      const response = await classroom.comments(classroomId, resourceId);
+      const response = await classroom.comments.index(classroomId, resourceId, resourceType);
       dispatch({ type: COMMENT_LOAD, payload: { key: resourceId, data: response } });
     } catch (err) {
       dispatch({ type: COMMENT_FAIL, payload: err.message });
@@ -28,7 +28,7 @@ export function loadComments(classroomId, resourceId) {
   };
 }
 
-export function createComment(classroomId, resourceId, body, afterCreate) {
+export function createComment(classroomId, resourceId, resourceType, body, afterCreate) {
   return async (dispatch, getState) => {
     const { isLoading } = getState().comments;
     const { username } = getState().user;
@@ -36,7 +36,7 @@ export function createComment(classroomId, resourceId, body, afterCreate) {
 
     dispatch({ type: COMMENT_INIT });
     try {
-      const response = await classroom.createComment(classroomId, resourceId, body);
+      const response = await classroom.comments.create(classroomId, resourceId, resourceType, body);
       const data = { ...response, ...{ username } };
       batch(() => {
         dispatch({ type: COMMENT_CREATE, payload: { key: resourceId, data } });
@@ -50,11 +50,11 @@ export function createComment(classroomId, resourceId, body, afterCreate) {
   };
 }
 
-function addCommentToTop(state, payload) {
+function addCommentToBottom(state, payload) {
   const { key, data } = payload;
 
   const newState = { ...state };
-  newState[key].unshift(data);
+  newState[key].push(data);
 
   return newState;
 }
@@ -80,7 +80,7 @@ export default function (state = initialState, { type, payload }) {
       return {
         ...state,
         isLoading: false,
-        data: addCommentToTop(state.data, payload),
+        data: addCommentToBottom(state.data, payload),
       };
     default:
       return { ...state };

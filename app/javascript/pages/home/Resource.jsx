@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 
 import { Chip, Paper } from '@mui/material';
-import { getResourceType } from '@app/utils/classroom';
 
 function Resource({
   resource_type: resourceType,
@@ -13,7 +12,7 @@ function Resource({
 }) {
   const history = useHistory();
   const handleClick = useCallback(() => {
-    history.push(`/resource/${id}/`);
+    history.push(`/discuss/classroom_resource/${id}/`);
   }, [history, id]);
 
   return (
@@ -23,11 +22,11 @@ function Resource({
           className={
             classNames(
               'resource__header',
-              `resource__header--${getResourceType(resourceType)}`,
+              `resource__header--${resourceType}`,
             )
           }
         >
-          {`[${getResourceType(resourceType).toUpperCase()}] `}
+          {`[${resourceType.toUpperCase()}] `}
           {title}
         </div>
         <Chip

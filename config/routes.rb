@@ -11,7 +11,13 @@ Rails.application.routes.draw do
       get '/quote', action: 'quote'
 
       resources :resources, only: %i[index create destroy update] do
-        resources :comments, only: %i[index create destroy update]
+        post '/mark_completed', action: 'mark_completed'
+      end
+
+      nested do
+        scope '/:commentable_type/:commentable_id' do
+          resources :comments, only: %i[index create destroy update]
+        end
       end
     end
   end

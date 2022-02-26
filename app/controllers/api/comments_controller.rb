@@ -3,12 +3,12 @@ module Api
     include ClassroomConcern
 
     before_action :set_classroom
-    before_action :set_resource
+    before_action :set_commentable
     before_action :validate_ownership, only: %i[update destroy]
 
     def index
       response = Academia::CommentQuery.call({
-        commentable: @resource,
+        commentable: @commentable,
         user_id: current_user.id
       })
 

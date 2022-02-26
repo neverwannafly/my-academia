@@ -27,7 +27,7 @@ function AppRouter() {
         component={AuthPage}
       />
       <Route
-        path="/resource/:resourceId"
+        path="/discuss/:resourceType/:resourceId"
         component={ResourcePage}
         exact
       />

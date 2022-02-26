@@ -61,10 +61,21 @@
   margin-bottom: 2rem;
 }
 
+.m-v-20 {
+  margin: 2rem 0;
+}
+
+.margin-auto {
+  margin: 0rem auto;
+}
+
 .container {
-  padding: 0 2rem;
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: -webkit-fill-available;
 
   @include mobile {
-    padding: 0 1rem;
+    padding: 1rem;
   }
 }

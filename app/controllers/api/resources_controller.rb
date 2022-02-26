@@ -3,7 +3,7 @@ module Api
     include ClassroomConcern
 
     before_action :set_classroom
-    before_action :set_resource, only: %i[update destroy]
+    before_action :set_resource, only: %i[update destroy mark_completed]
     before_action :validate_ownership, only: %i[update destroy]
 
     def index
@@ -29,6 +29,23 @@ module Api
     def destroy
       @resource.inactive!
       head :ok
+    end
+
+    def mark_completed
+      resource = @resource
+        .user_classroom_progresses
+        .where(user_id: current_user.id)
+        .first
+
+      unless resource.present?
+        resource = UserClassroomProgress.create(
+          classroom_resource_id: @resource.id,
+          user_id: current_user.id,
+          score: UserClassroomProgress::SCORE_MAPPINGS[@resource.resource_type.to_sym]
+        )
+      end
+
+      json_response(resource)
     end
 
     private

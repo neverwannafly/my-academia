@@ -1,7 +1,7 @@
+/* eslint-disable import/prefer-default-export */
 import { extractDateTime } from '@app/utils/datetime';
 
 export const groupResourcesByDate = (resources) => {
-  console.log(resources);
   const groupedResources = {};
   resources.forEach((resource) => {
     const [date] = extractDateTime(resource.created_at);
@@ -14,7 +14,3 @@ export const groupResourcesByDate = (resources) => {
 
   return groupedResources;
 };
-
-export const getResourceType = (resourceType) => ([
-  'problem', 'article',
-][resourceType]);

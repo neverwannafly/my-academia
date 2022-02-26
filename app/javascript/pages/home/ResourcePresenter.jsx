@@ -11,7 +11,7 @@ function ResourcePresenter() {
   const groupedData = groupResourcesByDate(data);
 
   if (isLoading) {
-    return <CircularProgress color="secondary" />;
+    return <CircularProgress className="margin-auto" color="secondary" />;
   }
 
   return Object.keys(groupedData).map((key) => (

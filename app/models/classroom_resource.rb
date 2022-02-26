@@ -5,6 +5,6 @@ class ClassroomResource < ApplicationRecord
   has_many :likes, as: :likeable
   has_many :user_classroom_progresses
 
-  enum classroom_type: %i[problem article]
+  enum resource_type: %i[problem article]
   enum status: %i[active inactive]
 end
