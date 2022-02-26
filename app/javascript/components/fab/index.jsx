@@ -1,14 +1,27 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
+import { setFabClose, setFabOpen, setFabState } from '@app/store/fab';
 import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
 import Modal from './Modal';
 
-function FAB({ mode }) {
-  const [isOpen, setOpen] = useState(false);
-  const handleOpen = useCallback(() => setOpen(true), []);
-  const handleClose = useCallback(() => setOpen(false), []);
+function FAB({ type }) {
+  const { isOpen, mode } = useSelector((state) => state.fab);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(setFabState({ type }));
+  }, [dispatch, type]);
+
+  const handleOpen = useCallback(() => (
+    dispatch(setFabOpen())
+  ), [dispatch]);
+
+  const handleClose = useCallback(() => (
+    dispatch(setFabClose())
+  ), [dispatch]);
 
   return (
     <>
@@ -32,6 +45,7 @@ function FAB({ mode }) {
         isOpen={isOpen}
         handleClose={handleClose}
         mode={mode}
+        type={type}
       />
     </>
   );

@@ -4,13 +4,17 @@ import { setToast } from './toast';
 
 const COMMENT_INIT = 'COMMENT_INIT';
 const COMMENT_LOAD = 'COMMENT_LOAD';
-const COMMENT_FAIL = 'COMMENT_FAIL';
 const COMMENT_CREATE = 'COMMENT_CREATE';
+
+export const COMMENT_FAIL = 'COMMENT_FAIL';
+export const COMMENT_ACTING = 'COMMENT_ACTING';
+export const COMMENT_LIKE = 'COMMENT_LIKE';
 
 const initialState = {
   data: {},
   isLoading: false,
   error: null,
+  isActing: false,
 };
 
 export function loadComments(classroomId, resourceId, resourceType) {
@@ -59,6 +63,18 @@ function addCommentToBottom(state, payload) {
   return newState;
 }
 
+function toggleContentLike(state, payload) {
+  const newState = { ...state };
+  const { resourceId, likeableId } = payload;
+
+  const index = newState[resourceId].findIndex((item) => item.id === Number(likeableId));
+  newState[resourceId][index].liked = !newState[resourceId][index].liked;
+  newState[resourceId].likes_count ||= 0;
+  newState[resourceId].likes_count += newState[index].liked ? 1 : -1;
+
+  return newState;
+}
+
 export default function (state = initialState, { type, payload }) {
   switch (type) {
     case COMMENT_INIT:
@@ -74,7 +90,15 @@ export default function (state = initialState, { type, payload }) {
       };
     case COMMENT_FAIL:
       return {
-        ...state, isLoading: false, error: payload,
+        ...state, isLoading: false, error: payload, isActing: false,
+      };
+    case COMMENT_ACTING:
+      return {
+        ...state, isActing: true, error: null,
+      };
+    case COMMENT_LIKE:
+      return {
+        ...state, isActing: false, data: toggleContentLike(state.data, payload),
       };
     case COMMENT_CREATE:
       return {

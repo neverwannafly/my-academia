@@ -4,6 +4,7 @@ import classNames from 'classnames';
 import {
   Chip, CircularProgress, Divider, Link, Paper,
 } from '@mui/material';
+import LinkIcon from '@mui/icons-material/Link';
 
 import Header from './Header';
 import Discuss from './Discuss';
@@ -30,7 +31,13 @@ function Container({ isLoaded, resource }) {
               )
             }
             >
-              {`${resource.resource_type.toUpperCase()} LINK`}
+              <div className="row">
+                <LinkIcon />
+                <span className="m-l-10">
+                  {'View '}
+                  {resource.resource_type}
+                </span>
+              </div>
             </div>
           </Link>
           <Chip

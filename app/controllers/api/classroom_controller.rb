@@ -15,5 +15,17 @@ module Api
 
       json_response({ data: response.data })
     end
+
+    def handle_like
+      like = Like.find_by(likeable_params)
+
+      if like.present?
+        like.delete
+      else
+        Like.create(likeable_params.merge(status: :active))
+      end
+
+      head :ok
+    end
   end
 end

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
     resources :classroom do
       get '/quote', action: 'quote'
+      post '/like', action: 'handle_like'
 
       resources :resources, only: %i[index create destroy update] do
         post '/mark_completed', action: 'mark_completed'

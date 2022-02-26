@@ -3,14 +3,16 @@ import React from 'react';
 import CommentForm from './CommentForm';
 import ResourceForm from './ResourceForm';
 
-function Form({ mode, handleClose }) {
+function Form({ type, mode, handleClose }) {
   return (
     <div className="form">
       <h3>
-        {mode === 'comment' ? 'Add Comment' : 'Create Resource'}
+        {mode.toUpperCase()}
+        {' '}
+        {type.toUpperCase()}
       </h3>
-      {mode === 'comment' ? (
-        <CommentForm handleClose={handleClose} />
+      {type === 'comment' ? (
+        <CommentForm mode={mode} handleClose={handleClose} />
       ) : (
         <ResourceForm handleClose={handleClose} />
       )}

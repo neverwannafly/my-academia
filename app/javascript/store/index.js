@@ -9,9 +9,16 @@ import classroom from './classroom';
 import resources from './resources';
 import quote from './quote';
 import comments from './comments';
+import fab from './fab';
 
 const reducers = combineReducers({
-  user, toast, classroom, resources, quote, comments,
+  user,
+  toast,
+  classroom,
+  fab,
+  resources,
+  quote,
+  comments,
 });
 
 const middlewares = [thunk];

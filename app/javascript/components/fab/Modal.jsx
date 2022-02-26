@@ -3,7 +3,12 @@ import React from 'react';
 import { Modal, Paper } from '@mui/material';
 import Form from './forms/index.jsx';
 
-function FabModal({ isOpen, handleClose, mode }) {
+function FabModal({
+  isOpen,
+  handleClose,
+  mode,
+  type,
+}) {
   return (
     <Modal
       open={isOpen}
@@ -14,7 +19,11 @@ function FabModal({ isOpen, handleClose, mode }) {
         style={{ width: '80%', margin: '0 auto', marginTop: '10rem' }}
         className="p-20"
       >
-        <Form handleClose={handleClose} mode={mode} />
+        <Form
+          handleClose={handleClose}
+          mode={mode}
+          type={type}
+        />
       </Paper>
     </Modal>
   );

@@ -33,7 +33,7 @@ function ResourcePage() {
       <div className="container">
         <Container isLoaded={isLoaded} resource={resource} />
       </div>
-      <FAB mode="comment" />
+      <FAB type="comment" />
     </>
   );
 }

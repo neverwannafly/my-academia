@@ -1,5 +1,8 @@
 import classroom from '@app/api/classroom';
 import { importStoreFromWindow } from '@app/constants/store';
+import { COMMENT_ACTING, COMMENT_FAIL, COMMENT_LIKE } from './comments';
+
+import { RESOURCE_LIKE, RESOURCE_ACTING, RESOURCE_FAIL } from './resources';
 
 const CLASSROOM_INIT = 'CLASSROOM_INIT';
 const CLASSROOM_LOAD = 'CLASSROOM_LOAD';
@@ -22,6 +25,32 @@ export function loadClassroom() {
       dispatch({ type: CLASSROOM_LOAD, payload: response });
     } catch (err) {
       dispatch({ type: CLASSROOM_FAIL, payload: err.message });
+    }
+  };
+}
+
+export function toggleLike(classroomId, likeableType, likeableId, resourceId) {
+  return async (dispatch, getState) => {
+    const { isActing: commentActing } = getState().comments;
+    const { isActing: resourceActing } = getState().resources;
+    if (likeableType === 'comment' && commentActing) return;
+    if (likeableType === 'classroom_resource' && resourceActing) return;
+
+    dispatch({
+      type: likeableType === 'comment' ? COMMENT_ACTING : RESOURCE_ACTING,
+    });
+
+    try {
+      await classroom.like(classroomId, likeableType, likeableId);
+      dispatch({
+        type: likeableType === 'comment' ? COMMENT_LIKE : RESOURCE_LIKE,
+        payload: { resourceId, likeableId },
+      });
+    } catch (err) {
+      dispatch({
+        type: likeableType === 'comment' ? COMMENT_FAIL : RESOURCE_FAIL,
+        payload: err.message,
+      });
     }
   };
 }
