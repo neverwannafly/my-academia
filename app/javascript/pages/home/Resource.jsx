@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 
@@ -7,6 +7,8 @@ import { Chip, Divider, Paper } from '@mui/material';
 // import FavoriteIcon from '@mui/icons-material/Favorite';
 // import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
+import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
+import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 // import { toggleLike } from '@app/store/classroom';
 
 function Resource({
@@ -15,10 +17,12 @@ function Resource({
   score,
   id,
   comments_count: commentsCount,
+  user_id: ownerId,
 }) {
   const history = useHistory();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   // const { data: { id: classroomId } } = useSelector((state) => state.classroom);
+  const { id: userId } = useSelector((state) => state.user);
 
   const handleClick = useCallback(() => {
     history.push(`/discuss/classroom_resource/${id}/`);
@@ -50,7 +54,7 @@ function Resource({
         </div>
       </div>
       <Divider />
-      <div className="row p-10">
+      <div className="row p-10 space-between">
         <span className="row">
           {/* <span
             className="row m-r-10 align-items-center pointer"
@@ -60,11 +64,17 @@ function Resource({
             {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
             {likesCount}
           </span> */}
-          <span className="row align-items-cente">
+          <span className="row align-items-center">
             <ChatBubbleOutlineOutlinedIcon />
             {commentsCount}
           </span>
         </span>
+        {userId === ownerId && (
+          <span className="row">
+            <ModeEditOutlinedIcon className="pointer" color="primary" />
+            <DeleteOutlineOutlinedIcon className="m-l-10 pointer" color="primary" />
+          </span>
+        )}
       </div>
     </Paper>
   );

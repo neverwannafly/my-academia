@@ -8,6 +8,7 @@ const initialState = importStoreFromWindow('user', {
   isLoggedin: false,
   username: '',
   name: '',
+  id: null,
 });
 
 export const setUser = (payload) => (dispatch) => {

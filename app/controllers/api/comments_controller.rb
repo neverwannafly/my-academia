@@ -16,7 +16,7 @@ module Api
     end
 
     def create
-      comment = Comment.create(comment_params)
+      comment = Comment.create!(comment_params)
 
       json_response(comment.as_json)
     end
@@ -41,7 +41,7 @@ module Api
     def comment_params
       params.permit(:title, :content).merge({
         user_id: current_user.id,
-        commentable: @resource,
+        commentable: @commentable,
         status: :active
       })
     end
