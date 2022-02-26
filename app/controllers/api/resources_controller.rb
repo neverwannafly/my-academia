@@ -23,7 +23,7 @@ module Api
 
     def update
       @resource.update!(resource_params)
-      head :ok
+      json_response(@resource.reload)
     end
 
     def destroy

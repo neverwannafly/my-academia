@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { batch, useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import { Chip, Divider, Paper } from '@mui/material';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
+import { setFabOpen, setFabState } from '@app/store/fab';
 // import { toggleLike } from '@app/store/classroom';
 
 function Resource({
@@ -27,6 +28,13 @@ function Resource({
   const handleClick = useCallback(() => {
     history.push(`/discuss/classroom_resource/${id}/`);
   }, [history, id]);
+
+  const handleEdit = useCallback(() => {
+    batch(() => {
+      dispatch(setFabOpen(id));
+      dispatch(setFabState({ type: 'classroom_resource', mode: 'edit' }));
+    });
+  }, [dispatch, id]);
 
   // const handleLike = useCallback(() => {
   //   dispatch(toggleLike(classroomId, 'classroom_resource', id));
@@ -71,7 +79,11 @@ function Resource({
         </span>
         {userId === ownerId && (
           <span className="row">
-            <ModeEditOutlinedIcon className="pointer" color="primary" />
+            <ModeEditOutlinedIcon
+              className="pointer"
+              color="primary"
+              onClick={handleEdit}
+            />
             <DeleteOutlineOutlinedIcon className="m-l-10 pointer" color="primary" />
           </span>
         )}

@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useCallback } from 'react';
+import { batch, useDispatch, useSelector } from 'react-redux';
 
 import { setFabClose, setFabOpen, setFabState } from '@app/store/fab';
 import Fab from '@mui/material/Fab';
@@ -11,13 +11,12 @@ function FAB({ type }) {
   const { isOpen, mode } = useSelector((state) => state.fab);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(setFabState({ type }));
+  const handleOpen = useCallback(() => {
+    batch(() => {
+      dispatch(setFabOpen());
+      dispatch(setFabState({ mode: 'create', type }));
+    });
   }, [dispatch, type]);
-
-  const handleOpen = useCallback(() => (
-    dispatch(setFabOpen())
-  ), [dispatch]);
 
   const handleClose = useCallback(() => (
     dispatch(setFabClose())

@@ -9,11 +9,11 @@ const create = async (classroomId, body) => (
 );
 
 const update = async (classroomId, resourceId, body) => (
-  apiRequest('POST', `/api/classroom/${classroomId}/resources/${resourceId}`, body)
+  apiRequest('PATCH', `/api/classroom/${classroomId}/resources/${resourceId}`, body)
 );
 
 const destroy = async (classroomId, resourceId, body) => (
-  apiRequest('POST', `/api/classroom/${classroomId}/resources/${resourceId}`, body)
+  apiRequest('DELETE', `/api/classroom/${classroomId}/resources/${resourceId}`, body)
 );
 
 const markCompleted = async (classroomId, resourceId) => (

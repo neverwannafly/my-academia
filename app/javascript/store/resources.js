@@ -6,6 +6,7 @@ const RESOURCE_INIT = 'RESOURCE_INIT';
 const RESOURCE_LOAD = 'RESOURCE_LOAD';
 const RESOURCE_COMPLETE = 'RESOURCE_COMPLETE';
 const RESOURCE_CREATE = 'RESOURCE_CREATE';
+const RESOURCE_UPDATE = 'RESOURCE_UPDATE';
 
 export const RESOURCE_FAIL = 'RESOURCE_FAIL';
 export const RESOURCE_ACTING = 'RESOURCE_ACTING';
@@ -45,6 +46,25 @@ export function createResource(classroomId, body, afterCreate) {
       batch(() => {
         dispatch({ type: RESOURCE_CREATE, payload: response });
         dispatch(setToast({ message: 'Added Resource 🥳', type: 'success' }));
+      });
+      afterCreate();
+    } catch (err) {
+      dispatch({ type: RESOURCE_FAIL, payload: err.message });
+    }
+  };
+}
+
+export function updateResource(classroomId, resourceId, body, afterCreate) {
+  return async (dispatch, getState) => {
+    const { isActing } = getState().resources;
+    if (isActing) return;
+
+    dispatch({ type: RESOURCE_ACTING });
+    try {
+      const response = await classroom.resources.update(classroomId, resourceId, body);
+      batch(() => {
+        dispatch({ type: RESOURCE_UPDATE, payload: response });
+        dispatch(setToast({ message: 'Updated Resource 🚀', type: 'success' }));
       });
       afterCreate();
     } catch (err) {
@@ -96,6 +116,14 @@ function toggleContentLike(state, payload) {
   return newState;
 }
 
+function handleUpdateResource(state, payload) {
+  const newState = Array.from(state);
+  const index = newState.findIndex((item) => item.id === Number(payload.id));
+  newState[index] = payload;
+
+  return newState;
+}
+
 export default function (state = initialState, { type, payload }) {
   switch (type) {
     case RESOURCE_ACTING:
@@ -117,6 +145,10 @@ export default function (state = initialState, { type, payload }) {
     case RESOURCE_COMPLETE:
       return {
         ...state, data: completeResource(state.data, payload), isActing: false,
+      };
+    case RESOURCE_UPDATE:
+      return {
+        ...state, data: handleUpdateResource(state.data, payload), isActing: false,
       };
     case RESOURCE_LIKE:
       return {

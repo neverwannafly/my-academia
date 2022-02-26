@@ -1,24 +1,30 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {
   Button, FormControl, InputLabel,
   MenuItem, Select, TextField,
 } from '@mui/material';
-import { createResource } from '@app/store/resources';
+import { createResource, updateResource } from '@app/store/resources';
 import { resourceMapping } from '@app/constants/fab';
 
-function ResourceForm({
-  initialTitle = '',
-  initialLink = '',
-  initialType = 'problem',
-  handleClose,
-}) {
+function ResourceForm({ handleClose }) {
   const { data: { id } } = useSelector((state) => state.classroom);
-  const [title, setTitle] = useState(initialTitle);
-  const [link, setLink] = useState(initialLink);
-  const [type, setType] = useState(initialType);
+  const { data: resources } = useSelector((state) => state.resources);
+  const { id: resourceId, mode } = useSelector((state) => state.fab);
+  const [title, setTitle] = useState('');
+  const [link, setLink] = useState('');
+  const [type, setType] = useState('problem');
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!resourceId) return;
+
+    const resource = resources.filter((r) => r.id === resourceId)[0];
+    setTitle(resource.title);
+    setLink(resource.link);
+    setType(resource.resource_type);
+  }, [resourceId, resources]);
 
   const handleSubmit = useCallback(async (event) => {
     event.preventDefault();
@@ -27,12 +33,21 @@ function ResourceForm({
       return;
     }
 
-    dispatch(createResource(
-      id,
-      { title, link, resource_type: resourceMapping[type] },
-      handleClose,
-    ));
-  }, [dispatch, id, link, title, type, handleClose]);
+    if (mode === 'edit') {
+      dispatch(updateResource(
+        id,
+        resourceId,
+        { title, link, resource_type: resourceMapping[type] },
+        handleClose,
+      ));
+    } else {
+      dispatch(createResource(
+        id,
+        { title, link, resource_type: resourceMapping[type] },
+        handleClose,
+      ));
+    }
+  }, [dispatch, id, link, title, type, handleClose, mode, resourceId]);
 
   return (
     <form className="column" onSubmit={handleSubmit}>

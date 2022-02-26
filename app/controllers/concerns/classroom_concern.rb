@@ -11,7 +11,7 @@ module ClassroomConcern
   end
 
   def set_resource
-    @resource = ClassroomResource.where(classroom_id: @classroom.id, id: params[:resource_id]).first
+    @resource = ClassroomResource.where(classroom_id: @classroom.id, id: params[:id]).first
     head :not_found and return if @resource.blank?
   end
 
