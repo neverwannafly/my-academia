@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Breadcrumbs, Button, Typography } from '@mui/material';
 import party from 'party-js';
 
-function Header({ title, status }) {
+function Header({ title, score }) {
   const ref = useRef();
 
   const handleClick = useCallback(() => {
@@ -23,7 +23,7 @@ function Header({ title, status }) {
         </Link>
         <Typography color="text.primary">{title}</Typography>
       </Breadcrumbs>
-      {status === 'pending' && (
+      {!score && (
         <Button ref={ref} variant="contained" onClick={handleClick}>
           Mark as Complete
         </Button>

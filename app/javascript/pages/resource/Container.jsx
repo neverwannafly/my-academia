@@ -19,7 +19,7 @@ function Container({ isLoaded, resource }) {
       <Header
         title={resource.title}
         type={resource.resource_type}
-        status={resource.status}
+        score={resource.score}
       />
       <Paper elevation={3} className="column m-t-10">
         <div className="row space-between resource__item" style={{ margin: 0 }}>

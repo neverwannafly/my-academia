@@ -8,7 +8,7 @@ import { getResourceType } from '@app/utils/classroom';
 function Resource({
   resource_type: resourceType,
   title,
-  status,
+  score,
   id,
 }) {
   const history = useHistory();
@@ -31,9 +31,9 @@ function Resource({
           {title}
         </div>
         <Chip
-          label={status !== 'pending' ? 'Complete 🥳' : 'Pending'}
+          label={score ? 'Complete 🥳' : 'Pending'}
           variant="outlined"
-          color={status !== 'pending' ? 'success' : 'warning'}
+          color={score ? 'success' : 'warning'}
         />
       </div>
     </Paper>
