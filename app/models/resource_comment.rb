@@ -1,2 +1,0 @@
-class ResourceComment < ApplicationRecord
-end

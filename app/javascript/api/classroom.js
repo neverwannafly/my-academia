@@ -9,7 +9,7 @@ const quote = async () => (
 );
 
 const comments = async (classroomId, resourceId) => (
-  apiRequest('GET', `/api/classroom/${classroomId}/${resourceId}/comments`)
+  apiRequest('GET', `/api/classroom/${classroomId}/resources/${resourceId}/comments`)
 );
 
 const createResource = async (classroomId, body) => (
@@ -17,7 +17,7 @@ const createResource = async (classroomId, body) => (
 );
 
 const createComment = async (classroomId, resourceId, body) => (
-  apiRequest('POST', `/api/classroom/${classroomId}/${resourceId}/comments`, body)
+  apiRequest('POST', `/api/classroom/${classroomId}/resources/${resourceId}/comments`, body)
 );
 
 export default {

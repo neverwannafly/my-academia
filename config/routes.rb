@@ -7,12 +7,12 @@ Rails.application.routes.draw do
     resources :sessions, only: %i[create destroy]
     resources :health_check, only: %i[index]
 
-    resources :classroom, only: %i[index] do
+    resources :classroom do
       get '/quote', action: 'quote'
-      get '/resources', action: 'resources'
-      post '/resources', action: 'create_resource'
-      get '/:resource_id/comments', action: 'comments'
-      post '/:resource_id/comments', action: 'add_comment'
+
+      resources :resources, only: %i[index create destroy update] do
+        resources :comments, only: %i[index create destroy update]
+      end
     end
   end
 

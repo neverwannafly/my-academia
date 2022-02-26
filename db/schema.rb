@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_02_25_102306) do
+ActiveRecord::Schema.define(version: 2022_02_26_104256) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -68,14 +68,25 @@ ActiveRecord::Schema.define(version: 2022_02_25_102306) do
   end
 
   create_table "likes", force: :cascade do |t|
-    t.bigint "users_id"
-    t.string "association_type"
-    t.integer "association_id"
+    t.bigint "user_id"
+    t.string "likeable_type"
+    t.integer "likeable_id"
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["association_type", "association_id"], name: "index_likes_on_association_type_and_association_id"
-    t.index ["users_id"], name: "index_likes_on_users_id"
+    t.index ["likeable_type", "likeable_id"], name: "index_likes_on_likeable_type_and_likeable_id"
+    t.index ["user_id"], name: "index_likes_on_user_id"
+  end
+
+  create_table "user_classroom_progresses", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "classroom_resource_id"
+    t.integer "score"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["classroom_resource_id"], name: "index_user_classroom_progresses_on_classroom_resource_id"
+    t.index ["created_at"], name: "index_user_classroom_progresses_on_created_at"
+    t.index ["user_id"], name: "index_user_classroom_progresses_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
