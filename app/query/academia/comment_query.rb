@@ -20,7 +20,7 @@ module Academia
           'COUNT(likes.id) as likes_count',
           "bit_or(CAST (likes.user_id=#{@options[:user_id]} AND likes.status=0 as integer)) as liked"
         )
-        .order('comments.id DESC')
+        .order('comments.id ASC')
     end
   end
 end
