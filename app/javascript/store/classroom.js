@@ -1,3 +1,4 @@
+import classroom from '@app/api/classroom';
 import { importStoreFromWindow } from '@app/constants/store';
 
 const CLASSROOM_INIT = 'CLASSROOM_INIT';
@@ -9,6 +10,21 @@ const initialState = {
   isLoading: false,
   error: null,
 };
+
+export function loadClassroom() {
+  return async (dispatch, getState) => {
+    const { isLoading } = getState().classroom;
+    if (isLoading) return;
+
+    dispatch({ type: CLASSROOM_INIT });
+    try {
+      const response = await classroom.index();
+      dispatch({ type: CLASSROOM_LOAD, payload: response });
+    } catch (err) {
+      dispatch({ type: CLASSROOM_FAIL, payload: err.message });
+    }
+  };
+}
 
 export default function (state = initialState, { type, payload }) {
   switch (type) {

@@ -4,10 +4,8 @@ module ClassroomConcern
   ALLOWED_COMMENTABLES = %w[classroom_resource comment]
 
   def set_classroom
-    classrooms = current_user.classrooms
-    classrooms = classrooms.where(id: params[:classroom_id]) if params[:classroom_id].present?
+    @classroom = current_user.classrooms.last
 
-    @classroom = classrooms.first
     head :not_found and return if @classroom.blank?
   end
 
