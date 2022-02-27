@@ -11,6 +11,7 @@ import Avatar from '@mui/material/Avatar';
 import Tooltip from '@mui/material/Tooltip';
 
 import { MENU_ITEMS } from '@app/constants/components';
+import Notification from './Notification';
 
 function UserMenu() {
   const history = useHistory();
@@ -36,7 +37,14 @@ function UserMenu() {
   if (!isLoggedin) return null;
 
   return (
-    <Box sx={{ flexGrow: 0, marginLeft: '2rem' }}>
+    <Box sx={{
+      flexGrow: 0,
+      marginLeft: '1rem',
+      display: 'flex',
+      alignItems: 'center',
+    }}
+    >
+      <Notification />
       <Tooltip title="Open settings">
         <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
           <Avatar>{username[0]}</Avatar>

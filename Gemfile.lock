@@ -82,7 +82,6 @@ GEM
     childprocess (4.1.0)
     concurrent-ruby (1.1.9)
     crass (1.0.6)
-    elo_rating (1.0.0)
     erubi (1.10.0)
     ffi (1.15.5)
     globalid (1.0.0)
@@ -214,7 +213,6 @@ DEPENDENCIES
   bootsnap (>= 1.4.4)
   byebug
   capybara (>= 3.26)
-  elo_rating (~> 1.0)
   jbuilder (~> 2.7)
   jwt
   listen (~> 3.3)

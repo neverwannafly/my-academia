@@ -9,4 +9,5 @@ class User < ApplicationRecord
   has_many :classrooms, :through => :classroom_users
   has_many :comments
   has_many :likes
+  has_many :activites, as: :owner
 end

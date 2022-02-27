@@ -17,7 +17,13 @@ module Api
 
     def create
       resource = ClassroomResource.create(resource_params)
-      
+      Activity.create_activity(
+        action: :create,
+        owner: current_user,
+        trackable: resource,
+        classroom_id: @classroom.id
+      )
+
       json_response(resource.as_json)
     end
 
@@ -32,20 +38,28 @@ module Api
     end
 
     def mark_completed
-      resource = @resource
+      progress = @resource
         .user_classroom_progresses
         .where(user_id: current_user.id)
         .first
 
-      unless resource.present?
-        resource = UserClassroomProgress.create(
+      unless progress.present?
+        progress = UserClassroomProgress.create(
           classroom_resource_id: @resource.id,
           user_id: current_user.id,
           score: UserClassroomProgress::SCORE_MAPPINGS[@resource.resource_type.to_sym]
         )
       end
 
-      json_response(resource)
+      Activity.create_activity(
+        action: :complete,
+        owner: current_user,
+        trackable: @resource,
+        classroom_id: @classroom.id,
+        params: { score: progress.score }
+      )
+
+      json_response(progress)
     end
 
     private

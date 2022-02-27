@@ -2,6 +2,7 @@ import apiRequest from '@app/lib/api';
 
 import comments from './comments';
 import resources from './resources';
+import activities from './activities';
 
 const index = async () => (
   apiRequest('GET', '/api/classroom')
@@ -21,6 +22,7 @@ const like = async (classroomId, likeableType, likeableId) => (
 export default {
   index,
   like,
+  activities,
   quote,
   comments,
   resources,

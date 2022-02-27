@@ -53,4 +53,3 @@ end
 gem 'jwt'
 gem 'listen', '~> 3.3'
 gem 'activerecord-import'
-gem 'elo_rating', '~> 1.0'

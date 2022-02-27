@@ -17,6 +17,12 @@ module Api
 
     def create
       comment = Comment.create!(comment_params)
+      Activity.create_activity(
+        action: :create,
+        owner: current_user,
+        trackable: comment,
+        classroom_id: @classroom.id
+      )
 
       json_response(comment.as_json)
     end

@@ -3,6 +3,7 @@ import {
 } from 'redux';
 import thunk from 'redux-thunk';
 
+import activities from './activities';
 import user from './user';
 import toast from './toast';
 import classroom from './classroom';
@@ -19,6 +20,7 @@ const reducers = combineReducers({
   resources,
   quote,
   comments,
+  activities,
 });
 
 const middlewares = [thunk];
