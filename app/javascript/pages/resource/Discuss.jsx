@@ -45,7 +45,7 @@ function Discuss() {
           <Divider />
           <div className="m-t-10 row space-between align-items-center ">
             <span className="row align-items-center">
-              <Avatar className="m-r-10">{row.username[0]}</Avatar>
+              <Avatar className="m-r-10" src={row.profile_pic} />
               {row.username}
             </span>
             <span className="row">

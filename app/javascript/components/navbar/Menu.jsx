@@ -18,7 +18,7 @@ function UserMenu() {
   const dispatch = useDispatch();
   const {
     isLoggedin,
-    username,
+    profilePic,
   } = useSelector((state) => state.user);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -47,7 +47,7 @@ function UserMenu() {
       <Notification />
       <Tooltip title="Open settings">
         <IconButton onClick={handleMenuOpen} sx={{ p: 0 }}>
-          <Avatar>{username[0]}</Avatar>
+          <Avatar src={profilePic} />
         </IconButton>
       </Tooltip>
       <Menu

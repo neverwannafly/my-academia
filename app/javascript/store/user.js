@@ -9,6 +9,7 @@ const initialState = importStoreFromWindow('user', {
   username: '',
   name: '',
   id: null,
+  profilePic: '',
 });
 
 export const setUser = (payload) => (dispatch) => {

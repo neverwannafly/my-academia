@@ -7,7 +7,8 @@
       name: '<%= @current_user&.name %>',
       isLoggedin: <%= @current_user.present? %>,
       id: <%= @current_user&.id %>,
-      time: '<%= DateTime.now.to_s %>'
+      time: '<%= DateTime.now.to_s %>',
+      profilePic: '<%= @current_user&.profile_pic || '' %>',
     },
     classroom: <%= raw @current_user&.classrooms&.first&.to_json || {} %>
   };
