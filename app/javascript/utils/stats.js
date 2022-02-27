@@ -41,15 +41,13 @@ export const lineChartData = (data) => {
 export const pieChartData = (data) => {
   const {
     total_problems: totalProblems,
-    total_artciles: totalArticles,
     problems_solved: problemsSolved,
-    articles_solved: articlesSolved,
   } = data;
 
   const labels = ['solved', 'unsolved'];
   const value = [
-    problemsSolved + articlesSolved,
-    totalArticles + totalProblems - problemsSolved - articlesSolved,
+    problemsSolved,
+    totalProblems - problemsSolved,
   ];
 
   return {

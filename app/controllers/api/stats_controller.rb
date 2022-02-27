@@ -12,27 +12,22 @@ module Api
         .where(created_at: start_date..end_date)
         .select(:score, :created_at, :id)
 
-      total_problems = base_relation(:problem)
-      total_artciles = base_relation(:article)
-
-      problems_solved = base_relation(:problem, join: true)
-      articles_solved = base_relation(:article, join: true)
+      total_problems = base_relation
+      problems_solved = base_relation(join: true)
 
       json_response({
         progress_data: progress_data,
         total_problems: total_problems,
-        total_artciles: total_artciles,
-        problems_solved: problems_solved,
-        articles_solved: articles_solved
+        problems_solved: problems_solved
       })
     end
 
     private
 
-    def base_relation(type, join: false)
+    def base_relation(join: false)
       relation = @classroom.classroom_resources
       relation = relation.joins(:user_classroom_progresses) if join
-      relation.active.where(user_id: current_user.id, resource_type: type).count
+      relation.active.count
     end
   end
 end
