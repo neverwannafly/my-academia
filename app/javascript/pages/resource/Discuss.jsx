@@ -1,17 +1,27 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback, useEffect } from 'react';
+import { useSelector, useDispatch, batch } from 'react-redux';
 import { useParams } from 'react-router-dom';
 
 import MdEditor from '@app/lib/MdEditor';
 import { loadComments } from '@app/store/comments';
 import { Avatar, Divider, Paper } from '@mui/material';
-import { readableDate } from '@app/utils/datetime';
+import { timeSince } from '@app/utils/datetime';
+import { setFabOpen, setFabState } from '@app/store/fab';
+import ModeEditOutlined from '@mui/icons-material/ModeEditOutlined';
 
 function Discuss() {
   const { resourceId, resourceType } = useParams();
   const dispatch = useDispatch();
+  const { id: userId } = useSelector((state) => state.user);
   const { data } = useSelector((state) => state.comments);
   const { data: { id } } = useSelector((state) => state.classroom);
+
+  const handleEdit = useCallback((commentId) => () => {
+    batch(() => {
+      dispatch(setFabOpen(commentId));
+      dispatch(setFabState({ type: 'comment', mode: 'edit' }));
+    });
+  }, [dispatch]);
 
   useEffect(() => {
     dispatch(loadComments(id, resourceId, resourceType));
@@ -24,7 +34,11 @@ function Discuss() {
   return (
     <div className="column">
       {data[resourceId].map((row) => (
-        <Paper elevation={4} className="column p-10 m-t-10" key={row.id}>
+        <Paper
+          elevation={4}
+          className="column p-10 m-t-10"
+          key={row.id}
+        >
           <h3>{row.title}</h3>
           <MdEditor.Preview value={row.content} />
           <div className="m-t-10" />
@@ -34,7 +48,18 @@ function Discuss() {
               <Avatar className="m-r-10">{row.username[0]}</Avatar>
               {row.username}
             </span>
-            {readableDate(row.created_at)}
+            <span className="row">
+              {userId === row.user_id && (
+              <ModeEditOutlined
+                className="pointer m-r-5"
+                color="primary"
+                onClick={handleEdit(row.id)}
+              />
+              )}
+              {timeSince(row.created_at)}
+              {' '}
+              ago
+            </span>
           </div>
         </Paper>
       ))}

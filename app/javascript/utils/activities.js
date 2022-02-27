@@ -1,10 +1,17 @@
 import { timeSince } from './datetime';
 
+const snakeCase = (string) => string.replace(/\W+/g, ' ')
+  .split(/ |\B(?=[A-Z])/)
+  .map((word) => word.toLowerCase())
+  .join('_');
+
 export default function parseActivity({
   created_at: createdAt,
   params,
   trackable: {
     title,
+    commentable_type: commentableType,
+    commentable_id: commentableId,
     id,
   },
   owner: {
@@ -12,6 +19,7 @@ export default function parseActivity({
     profile_pic: profilePic,
   },
   key,
+  id: activityId,
 }) {
   switch (key) {
     case 'classroom_resource.complete':
@@ -20,7 +28,7 @@ export default function parseActivity({
         link: `/discuss/classroom_resource/${id}/`,
         profilePic,
         time: timeSince(createdAt),
-        key,
+        activityId,
       };
     case 'classroom_resource.create':
       return {
@@ -28,15 +36,15 @@ export default function parseActivity({
         link: `/discuss/classroom_resource/${id}/`,
         profilePic,
         time: timeSince(createdAt),
-        key,
+        activityId,
       };
     case 'comment.create':
       return {
         text: `@${username} added a comment - ${title}`,
-        link: `/discuss/comment/${id}/`,
+        link: `/discuss/${snakeCase(commentableType)}/${commentableId}/`,
         profilePic,
         time: timeSince(createdAt),
-        key,
+        activityId,
       };
     default:
       return {};

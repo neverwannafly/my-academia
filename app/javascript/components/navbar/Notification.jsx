@@ -58,11 +58,11 @@ function Notification() {
       >
         {data.map((activity) => {
           const {
-            text, link, profilePic, time, key,
+            text, link, profilePic, time, activityId,
           } = parseActivity(activity);
           return (
             <MenuItem
-              key={key}
+              key={activityId}
               onClick={handleMenuClose(link)}
               sx={{ whiteSpace: 'break-spaces' }}
             >

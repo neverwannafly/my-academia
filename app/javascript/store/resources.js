@@ -119,7 +119,7 @@ function toggleContentLike(state, payload) {
 function handleUpdateResource(state, payload) {
   const newState = Array.from(state);
   const index = newState.findIndex((item) => item.id === Number(payload.id));
-  newState[index] = payload;
+  newState[index] = { ...newState[index], ...payload };
 
   return newState;
 }

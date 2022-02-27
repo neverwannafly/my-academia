@@ -5,6 +5,7 @@ import { setToast } from './toast';
 const COMMENT_INIT = 'COMMENT_INIT';
 const COMMENT_LOAD = 'COMMENT_LOAD';
 const COMMENT_CREATE = 'COMMENT_CREATE';
+const COMMENT_UPDATE = 'COMMENT_UPDATE';
 
 export const COMMENT_FAIL = 'COMMENT_FAIL';
 export const COMMENT_ACTING = 'COMMENT_ACTING';
@@ -54,11 +55,52 @@ export function createComment(classroomId, resourceId, resourceType, body, after
   };
 }
 
+export function updateComment(
+  classroomId,
+  resourceId,
+  resourceType,
+  commentId,
+  body,
+  afterCreate,
+) {
+  return async (dispatch, getState) => {
+    const { isActing } = getState().resources;
+    if (isActing) return;
+
+    dispatch({ type: COMMENT_ACTING });
+    try {
+      const response = await classroom.comments.update(
+        classroomId,
+        resourceId,
+        resourceType,
+        commentId,
+        body,
+      );
+      batch(() => {
+        dispatch({ type: COMMENT_UPDATE, payload: response });
+        dispatch(setToast({ message: 'Updated Comment 🚀', type: 'success' }));
+      });
+      afterCreate();
+    } catch (err) {
+      dispatch({ type: COMMENT_FAIL, payload: err.message });
+    }
+  };
+}
+
 function addCommentToBottom(state, payload) {
   const { key, data } = payload;
 
   const newState = { ...state };
   newState[key].push(data);
+
+  return newState;
+}
+
+function handleCommentUpdate(state, payload) {
+  const newState = { ...state };
+  const { id, commentable_id: commentableId } = payload;
+  const index = newState[commentableId].findIndex((item) => item.id === id);
+  newState[commentableId][index] = { ...newState[commentableId][index], ...payload };
 
   return newState;
 }
@@ -105,6 +147,12 @@ export default function (state = initialState, { type, payload }) {
         ...state,
         isLoading: false,
         data: addCommentToBottom(state.data, payload),
+      };
+    case COMMENT_UPDATE:
+      return {
+        ...state,
+        isActing: false,
+        data: handleCommentUpdate(state.data, payload),
       };
     default:
       return { ...state };

@@ -28,8 +28,8 @@ module Api
     end
 
     def update
-      @comment.update!(resource_params)
-      head :ok
+      @comment.update!(comment_params)
+      json_response(@comment.reload)
     end
 
     def destroy
@@ -40,7 +40,7 @@ module Api
     private
 
     def validate_ownership
-      @comment = Comment.find_by_id(params[:comment_id])
+      @comment = Comment.find_by_id(params[:id])
       head :forbidden and return if @comment&.user_id != current_user.id
     end
 

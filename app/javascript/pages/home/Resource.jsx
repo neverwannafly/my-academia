@@ -8,7 +8,6 @@ import { Chip, Divider, Paper } from '@mui/material';
 // import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
-import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import { setFabOpen, setFabState } from '@app/store/fab';
 // import { toggleLike } from '@app/store/classroom';
 
@@ -84,7 +83,6 @@ function Resource({
               color="primary"
               onClick={handleEdit}
             />
-            <DeleteOutlineOutlinedIcon className="m-l-10 pointer" color="primary" />
           </span>
         )}
       </div>
