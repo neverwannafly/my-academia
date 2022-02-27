@@ -11,6 +11,7 @@ import resources from './resources';
 import quote from './quote';
 import comments from './comments';
 import fab from './fab';
+import stats from './stats';
 
 const reducers = combineReducers({
   user,
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   quote,
   comments,
   activities,
+  stats,
 });
 
 const middlewares = [thunk];

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       get '/quote', action: 'quote'
       post '/like', action: 'handle_like'
 
+      resources :stats, only: %i[index]
       resources :activities, only: %i[index]
 
       resources :resources, only: %i[index create destroy update] do

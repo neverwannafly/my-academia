@@ -3,6 +3,7 @@ import apiRequest from '@app/lib/api';
 import comments from './comments';
 import resources from './resources';
 import activities from './activities';
+import stats from './stats';
 
 const index = async () => (
   apiRequest('GET', '/api/classroom')
@@ -26,4 +27,5 @@ export default {
   quote,
   comments,
   resources,
+  stats,
 };

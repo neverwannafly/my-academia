@@ -5,9 +5,11 @@ import withLogin from '@app/hoc/withLogin';
 import FAB from '@app/components/fab';
 import { loadResources } from '@app/store/resources';
 import { setFabState } from '@app/store/fab';
+import { loadStats } from '@app/store/stats';
 
 import ResourcePresenter from './ResourcePresenter';
 import Quote from './Quote';
+import Stats from './Stats';
 
 function HomePage() {
   const { data: { id } } = useSelector((state) => state.classroom);
@@ -15,6 +17,7 @@ function HomePage() {
 
   useEffect(() => {
     dispatch(loadResources(id));
+    dispatch(loadStats(id));
   }, [dispatch, id]);
 
   useEffect(() => {
@@ -25,6 +28,7 @@ function HomePage() {
     <>
       <div className="container">
         <Quote />
+        <Stats />
         <ResourcePresenter />
       </div>
       <FAB type="resource" />
