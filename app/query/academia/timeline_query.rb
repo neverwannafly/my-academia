@@ -11,7 +11,7 @@ module Academia
         .left_outer_joins(:user_classroom_progresses)
         .where({ classroom_id: @options[:classroom_id] })
         .where({ classroom_resources: { status: :active } })
-        .where({ user_classroom_progresses: { user_id: @options[:user_id] } })
+        .where("user_classroom_progresses.user_id = ? OR user_classroom_progresses.user_id IS NULL", @options[:user_id])
         .group("classroom_resources.id", "users.id", "user_classroom_progresses.id")
     end
 
