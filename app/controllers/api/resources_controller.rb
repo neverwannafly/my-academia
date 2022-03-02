@@ -51,14 +51,6 @@ module Api
         )
       end
 
-      Activity.create_activity(
-        action: :complete,
-        owner: current_user,
-        trackable: @resource,
-        classroom_id: @classroom.id,
-        params: { score: progress.score }
-      )
-
       json_response(progress)
     end
 

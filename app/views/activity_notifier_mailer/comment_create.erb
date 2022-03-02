@@ -1,10 +1,22 @@
-Howdy-doody!!<br>
-The day's going terrific and so are you 🥳<br>
-<br>
-Check out the latest comment that was added by @<%= @creator %> by clicking
-<a href="https://my-academia.herokuapp.com/discuss/<%= @resource.class.name.underscore %>/<%= @resource.id %>/">
-  here
-</a><br>
-<br>
-Keep crushing it 🚀<br>
-~ @alwayswannaly
+<div class="m-t-20"></div>
+<div class="container">
+  <h1 class="header">
+    My Academia
+  </h1>
+  Howdy-doody!!<br>
+  The day's going terrific and so are you 🥳<br>
+  <br>
+  Check out the latest comment that was added by @<%= @creator %> by clicking
+  <a href="https://my-academia.herokuapp.com/discuss/<%= @resource.class.name.underscore %>/<%= @resource.id %>/">
+    here
+  </a>
+  <blockquote class="blockquote">
+    <% if @comment.title.present? %>
+      <%= @comment.title %>
+    <% else %>
+      <%= @comment.content %>
+    <% end %>
+  </blockquote>
+  Keep crushing it 🚀<br>
+  ~ @alwayswannaly
+</div>

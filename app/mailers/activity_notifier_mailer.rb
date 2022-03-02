@@ -3,7 +3,8 @@ class ActivityNotifierMailer < ApplicationMailer
 
   def comment_create(activity)
     @activity = activity
-    @resource = @activity.trackable.commentable
+    @comment = @activity.trackable
+    @resource = @comment.commentable
     @creator = activity.owner.username
     subject = "#{@creator} added a comment to #{@resource.title}"
 

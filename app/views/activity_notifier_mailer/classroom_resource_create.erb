@@ -1,10 +1,19 @@
-Wats poppin Chica?!!<br>
-It sure looks like a hot fresh brewing <%= @resource.resource_type %> was added by <%= @creator %><br>
-<br>
-Be the first one to finish it 
-<a href="https://my-academia.herokuapp.com/discuss/<%= @resource.class.name.underscore %>/<%= @resource.id %>/">
-  here
-</a><br>
-<br>
-Keep grinding, keep growing 🚀<br>
-~ @alwayswannaly<br>
+<div class="m-t-20"></div>
+<div class="container">
+  <h1 class="header">
+    My Academia
+  </h1>
+  Wats poppin Chica?!!<br>
+  It sure looks like a hot fresh brewing <%= @resource.resource_type %> was added by <%= @creator %><br>
+  <br>
+  Be the first one to finish it 
+  <a href="https://my-academia.herokuapp.com/discuss/<%= @resource.class.name.underscore %>/<%= @resource.id %>/">
+    here
+  </a><br>
+  <blockquote class="blockquote red">
+    <%= @resource.title %>
+  </blockquote>
+  <br>
+  Keep grinding, keep growing 🚀<br>
+  ~ @alwayswannaly<br>
+</div>
