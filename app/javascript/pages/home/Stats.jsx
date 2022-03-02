@@ -45,7 +45,7 @@ function Stats() {
   const isTablet = useMediaQuery(useMediaQuery.QUERIES.tablet);
   const lineWidth = useMemo(() => (isTablet ? '100%' : '75%'), [isTablet]);
   const lineHeight = useMemo(() => (isTablet ? 160 : 80), [isTablet]);
-  const pieWidth = useMemo(() => (isTablet ? '100%' : '20%'), [isTablet]);
+  const pieWidth = useMemo(() => (isTablet ? '70%' : '20%'), [isTablet]);
 
   if (Object.keys(data).length === 0 || isLoading) {
     return null;
