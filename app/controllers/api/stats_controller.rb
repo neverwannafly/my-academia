@@ -10,6 +10,7 @@ module Api
 
       progress_data = UserClassroomProgress
         .where(created_at: start_date..end_date)
+        .where(user_id: current_user.id)
         .select(:score, :created_at, :id)
 
       total_problems = base_relation
@@ -26,7 +27,11 @@ module Api
 
     def base_relation(join: false)
       relation = @classroom.classroom_resources
-      relation = relation.joins(:user_classroom_progresses) if join
+      if join
+        relation = relation
+          .joins(:user_classroom_progresses)
+          .where({ user_classroom_progresses: { user_id: current_user.id } })
+      end
       relation.active.count
     end
   end
