@@ -2,9 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 
 import {
+  Avatar,
   Chip, CircularProgress, Divider, Link, Paper,
 } from '@mui/material';
 import LinkIcon from '@mui/icons-material/Link';
+import MdEditor from '@app/lib/MdEditor';
+import { timeSince } from '@app/utils/datetime';
 
 import Header from './Header';
 import Discuss from './Discuss';
@@ -46,9 +49,27 @@ function Container({ isLoaded, resource }) {
             color={resource.score ? 'success' : 'warning'}
           />
         </div>
+        {(resource.content) && (
+          <>
+            <Divider />
+            <div className="resource__body p-10">
+              <MdEditor.Preview value={resource.content} />
+            </div>
+          </>
+        )}
         <Divider />
-        <div className="resource__body p-10">
-          {resource.content}
+        <div className="p-10">
+          <div className="m-t-10 row space-between align-items-center ">
+            <span className="row align-items-center">
+              <Avatar className="m-r-10" src={resource.profile_pic} />
+              {resource.username}
+            </span>
+            <span className="row">
+              {timeSince(resource.created_at)}
+              {' '}
+              ago
+            </span>
+          </div>
         </div>
       </Paper>
       <h2 className="m-t-10">Discuss</h2>

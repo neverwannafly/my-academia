@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 
 import { Button, TextField } from '@mui/material';
 import MdEditor from '@app/lib/MdEditor';
 import { createComment, updateComment } from '@app/store/comments';
-import { useParams } from 'react-router-dom';
 
 function CommentForm({ handleClose }) {
   const [title, setTitle] = useState('');

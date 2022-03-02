@@ -5,6 +5,7 @@ import {
   Button, FormControl, InputLabel,
   MenuItem, Select, TextField,
 } from '@mui/material';
+import MdEditor from '@app/lib/MdEditor';
 import { createResource, updateResource } from '@app/store/resources';
 import { resourceMapping } from '@app/constants/fab';
 
@@ -15,12 +16,14 @@ function ResourceForm({ handleClose }) {
   const [title, setTitle] = useState('');
   const [link, setLink] = useState('');
   const [type, setType] = useState('problem');
+  const [content, setContent] = useState('');
   const dispatch = useDispatch();
 
   useEffect(() => {
     if (!resourceId) return;
 
     const resource = resources.filter((r) => r.id === resourceId)[0];
+    setContent(resource.content);
     setTitle(resource.title);
     setLink(resource.link);
     setType(resource.resource_type);
@@ -37,17 +40,21 @@ function ResourceForm({ handleClose }) {
       dispatch(updateResource(
         id,
         resourceId,
-        { title, link, resource_type: resourceMapping[type] },
+        {
+          title, link, resource_type: resourceMapping[type], content,
+        },
         handleClose,
       ));
     } else {
       dispatch(createResource(
         id,
-        { title, link, resource_type: resourceMapping[type] },
+        {
+          title, link, resource_type: resourceMapping[type], content,
+        },
         handleClose,
       ));
     }
-  }, [dispatch, id, link, title, type, handleClose, mode, resourceId]);
+  }, [dispatch, id, link, title, type, handleClose, mode, resourceId, content]);
 
   return (
     <form className="column" onSubmit={handleSubmit}>
@@ -77,6 +84,11 @@ function ResourceForm({ handleClose }) {
           <MenuItem value="article">Article</MenuItem>
         </Select>
       </FormControl>
+      <MdEditor
+        className="m-t-10"
+        value={content}
+        setValue={setContent}
+      />
       <Button
         className="auth-form__submit"
         variant="contained"

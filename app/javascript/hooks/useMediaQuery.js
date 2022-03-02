@@ -1,4 +1,4 @@
-import { useMedia } from 'react-media';
+import { useMediaQuery as useMedia } from '@mui/material';
 
 import {
   desktopWidth,
@@ -8,7 +8,6 @@ import {
 } from '@app/constants/media';
 
 export const MEDIA_QUERIES = {
-  mobile: `(max-width: ${mobileWidth}px)`,
   tablet: `(max-width: ${tabletWidth}px)`,
   tabletOnly:
     `(min-width: ${mobileWidth + 1}px) and (max-width: ${tabletWidth})px`,
@@ -16,8 +15,10 @@ export const MEDIA_QUERIES = {
   smallDesktop: `(max-width: ${largeDesktopWidth}px)`,
 };
 
-function useMediaQuery() {
-  return useMedia({ queries: MEDIA_QUERIES });
+function useMediaQuery(query) {
+  return useMedia(query);
 }
+
+useMediaQuery.QUERIES = MEDIA_QUERIES;
 
 export default useMediaQuery;

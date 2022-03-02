@@ -10,6 +10,8 @@ module Api
         json_response({
           username: user.username,
           name: user.name || '',
+          profilePic: user.profile_pic,
+          id: user.id,
         })
       else
         json_response({ error: user&.errors })

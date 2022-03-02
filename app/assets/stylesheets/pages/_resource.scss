@@ -1,5 +1,8 @@
 .resource {
   &__item-container {
+    @include flex-row;
+
+    flex-wrap: wrap;
     margin: 1rem 0;
   }
 

@@ -39,8 +39,12 @@ function Discuss() {
           className="column p-10 m-t-10"
           key={row.id}
         >
-          <h3>{row.title}</h3>
-          <MdEditor.Preview value={row.content} />
+          {row.title && row.title.length > 0 && (
+            <h3>{row.title}</h3>
+          )}
+          {row.content && row.content.length > 0 && (
+            <MdEditor.Preview value={row.content} />
+          )}
           <div className="m-t-10" />
           <Divider />
           <div className="m-t-10 row space-between align-items-center ">

@@ -28,7 +28,7 @@ export const lineChartData = (data) => {
     .sort((row1, row2) => row2.order - row1.order);
 
   return {
-    labels: values.map((row) => row.key),
+    labels: values.map((row) => row.key.split(' ')[0]),
     datasets: [{
       label: 'Score',
       data: values.map((row) => row.count),

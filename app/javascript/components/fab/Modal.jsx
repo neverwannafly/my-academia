@@ -16,7 +16,7 @@ function FabModal({
     >
       <Paper
         elevation={3}
-        style={{ width: '80%', margin: '0 auto', marginTop: '10rem' }}
+        style={{ width: '80%', margin: '0 auto', marginTop: '1rem' }}
         className="p-20"
       >
         <Form

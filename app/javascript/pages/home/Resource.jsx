@@ -9,6 +9,8 @@ import { Chip, Divider, Paper } from '@mui/material';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import { setFabOpen, setFabState } from '@app/store/fab';
+import useMediaQuery from '@app/hooks/useMediaQuery';
+import { useMemo } from 'react';
 // import { toggleLike } from '@app/store/classroom';
 
 function Resource({
@@ -35,12 +37,25 @@ function Resource({
     });
   }, [dispatch, id]);
 
+  const isTablet = useMediaQuery(useMediaQuery.QUERIES.tablet);
+
+  const style = useMemo(() => {
+    if (isTablet) {
+      return { flexBasis: '100%' };
+    }
+    return { flexBasis: '30%', marginRight: '1rem' };
+  }, [isTablet]);
+
   // const handleLike = useCallback(() => {
   //   dispatch(toggleLike(classroomId, 'classroom_resource', id));
   // }, [dispatch, id, classroomId]);
 
   return (
-    <Paper className="m-t-10" elevation={3}>
+    <Paper
+      className="m-t-10"
+      elevation={3}
+      sx={style}
+    >
       <div className="row" role="presentation" onClick={handleClick}>
         <div className="resource__item">
           <div

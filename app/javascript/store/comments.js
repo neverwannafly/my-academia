@@ -36,13 +36,13 @@ export function loadComments(classroomId, resourceId, resourceType) {
 export function createComment(classroomId, resourceId, resourceType, body, afterCreate) {
   return async (dispatch, getState) => {
     const { isLoading } = getState().comments;
-    const { username } = getState().user;
+    const { username, profilePic, id } = getState().user;
     if (isLoading) return;
 
     dispatch({ type: COMMENT_INIT });
     try {
       const response = await classroom.comments.create(classroomId, resourceId, resourceType, body);
-      const data = { ...response, ...{ username } };
+      const data = { ...response, ...{ username, profile_pic: profilePic, user_id: id } };
       batch(() => {
         dispatch({ type: COMMENT_CREATE, payload: { key: resourceId, data } });
         dispatch(setToast({ message: 'Added Resource 🥳', type: 'success' }));

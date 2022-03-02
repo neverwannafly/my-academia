@@ -46,8 +46,7 @@ module Api
       unless progress.present?
         progress = UserClassroomProgress.create(
           classroom_resource_id: @resource.id,
-          user_id: current_user.id,
-          score: UserClassroomProgress::SCORE_MAPPINGS[@resource.resource_type.to_sym]
+          user_id: current_user.id
         )
       end
 
@@ -61,7 +60,7 @@ module Api
     end
 
     def resource_params
-      params.permit(:title, :link, :resource_type).merge({
+      params.permit(:title, :link, :resource_type, :content).merge({
         status: :active,
         user_id: current_user.id,
         classroom_id: @classroom.id
