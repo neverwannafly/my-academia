@@ -3,7 +3,7 @@ import { readableDate } from './datetime';
 function dateRange(date) {
   const data = {};
 
-  for (let i = 0; i < 7; i += 1) {
+  for (let i = 0; i < 8; i += 1) {
     const newDate = new Date(date);
     newDate.setDate(newDate.getDate() - i);
     data[readableDate(newDate)] = {
