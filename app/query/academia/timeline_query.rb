@@ -7,11 +7,10 @@ module Academia
     def query
       relation
         .joins(:user)
+        .joins("LEFT OUTER JOIN user_classroom_progresses ON user_classroom_progresses.classroom_resource_id = classroom_resources.id AND user_classroom_progresses.user_id = #{@options[:user_id]}")
         .left_outer_joins(:comments)
-        .left_outer_joins(:user_classroom_progresses)
         .where({ classroom_id: @options[:classroom_id] })
         .where({ classroom_resources: { status: :active } })
-        .where("user_classroom_progresses.user_id = ? OR user_classroom_progresses.user_id IS NULL", @options[:user_id])
         .group("classroom_resources.id", "users.id", "user_classroom_progresses.id")
     end
 
