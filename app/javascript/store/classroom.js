@@ -7,11 +7,15 @@ import { RESOURCE_LIKE, RESOURCE_ACTING, RESOURCE_FAIL } from './resources';
 const CLASSROOM_INIT = 'CLASSROOM_INIT';
 const CLASSROOM_LOAD = 'CLASSROOM_LOAD';
 const CLASSROOM_FAIL = 'CLASSROOM_FAIL';
+const SEARCH_INIT = 'SEARCH_INIT';
+const SEARCH_DONE = 'SEARCH_DONE';
 
 const initialState = {
   data: importStoreFromWindow('classroom', {}),
   isLoading: false,
   error: null,
+  isSearching: false,
+  searchables: [],
 };
 
 export function loadClassroom() {
@@ -25,6 +29,26 @@ export function loadClassroom() {
       dispatch({ type: CLASSROOM_LOAD, payload: response });
     } catch (err) {
       dispatch({ type: CLASSROOM_FAIL, payload: err.message });
+    }
+  };
+}
+
+export function search(searchTerm, onSuccess, onFail) {
+  return async (dispatch, getState) => {
+    const { isSearching, data: { id } } = getState().classroom;
+
+    if (!searchTerm || searchTerm.length < 3 || isSearching) {
+      return;
+    }
+    dispatch({ type: SEARCH_INIT });
+    try {
+      const response = await classroom.search(id, searchTerm);
+      dispatch({ type: SEARCH_DONE, payload: response.data });
+      onSuccess();
+    } catch (err) {
+      if (onFail) {
+        onFail(err.message);
+      }
     }
   };
 }
@@ -63,6 +87,14 @@ export default function (state = initialState, { type, payload }) {
       return { ...state, isLoading: false, data: payload };
     case CLASSROOM_FAIL:
       return { ...state, isLoading: false, error: payload };
+    case SEARCH_INIT:
+      return {
+        ...state, isSearching: true, searchables: [],
+      };
+    case SEARCH_DONE:
+      return {
+        ...state, isSearching: false, searchables: payload,
+      };
     default:
       return { ...state };
   }

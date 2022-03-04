@@ -9,6 +9,7 @@ Rails.application.routes.draw do
 
     resources :classroom do
       get '/quote', action: 'quote'
+      get '/search', action: 'search'
       post '/like', action: 'handle_like'
 
       resources :stats, only: %i[index]

@@ -6,11 +6,18 @@ module Api
     before_action :set_classroom, except: %i[quote]
 
     def index
-      json_response(@classroom.as_json)
+      json_response(@classroom)
     end
 
     def quote
       response = DailyQuotesService.execute
+      head :service_unavailable and return unless response.success
+
+      json_response({ data: response.data })
+    end
+
+    def search
+      response = SearchService.execute({ search_term: params[:query] })
       head :service_unavailable and return unless response.success
 
       json_response({ data: response.data })

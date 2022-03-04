@@ -13,6 +13,10 @@ const quote = async () => (
   apiRequest('GET', '/api/classroom/0/quote/')
 );
 
+const search = async (classroomId, searchTerm) => (
+  apiRequest('GET', `/api/classroom/${classroomId}/search?query=${searchTerm}`)
+);
+
 const like = async (classroomId, likeableType, likeableId) => (
   apiRequest('POST', `/api/classroom/${classroomId}/like`, {
     likeable_type: likeableType,
@@ -22,6 +26,7 @@ const like = async (classroomId, likeableType, likeableId) => (
 
 export default {
   index,
+  search,
   like,
   activities,
   quote,

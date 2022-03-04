@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { styled, alpha } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
+import {
+  Menu, MenuItem, Avatar, Typography,
+} from '@mui/material';
+import debounce from 'lodash/debounce';
+import { useDispatch, useSelector } from 'react-redux';
+import { search } from '@app/store/classroom';
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
   color: 'inherit',
@@ -45,16 +52,109 @@ const Search = styled('div')(({ theme }) => ({
   },
 }));
 
-export default function () {
+function SearchMenu({
+  anchorEl,
+  handleMenuClose,
+  hide,
+}) {
+  const { searchables } = useSelector((state) => state.classroom);
+
+  if (hide) {
+    return null;
+  }
+
   return (
-    <Search>
-      <SearchIconWrapper>
-        <SearchIcon />
-      </SearchIconWrapper>
-      <StyledInputBase
-        placeholder="Search…"
-        inputProps={{ 'aria-label': 'search' }}
-      />
-    </Search>
+    <Menu
+      sx={{ mt: '3.5rem' }}
+      id="menu-appbar"
+      anchorEl={anchorEl}
+      anchorOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      keepMounted
+      transformOrigin={{
+        vertical: 'top',
+        horizontal: 'right',
+      }}
+      open={Boolean(anchorEl)}
+      onClose={handleMenuClose()}
+    >
+      {searchables.length === 0 && (
+        <p className="p-10">Nothing to show here! 🤔</p>
+      )}
+      {searchables.map(({
+        id,
+        title,
+        commentable_type: commentableType,
+        commentable_id: commentableId,
+        profile_pic: profilePic,
+      }) => (
+        <MenuItem
+          key={id}
+          onClick={handleMenuClose(id, commentableId)}
+          sx={{ whiteSpace: 'break-spaces' }}
+        >
+          <div className="row">
+            <Avatar src={profilePic} />
+            <div className="column m-l-10">
+              <div className="m-b">{title}</div>
+              <Typography color="primary">
+                {commentableType ? 'Comment' : 'Resource'}
+              </Typography>
+            </div>
+          </div>
+        </MenuItem>
+      ))}
+    </Menu>
   );
 }
+
+function SearchBar() {
+  const [searchTerm, setSearchTerm] = useState('');
+  const [hidden, setHidden] = useState(true);
+  const searchRef = useRef();
+  const history = useHistory();
+  const dispatch = useDispatch();
+
+  const handleMenuClose = useCallback((id, commentableId) => () => {
+    setHidden(true);
+    if (id) {
+      history.push(`/discuss/classroom_resource/${commentableId || id}`);
+    }
+  }, [history]);
+
+  const handleApiRequest = useCallback(debounce((value) => {
+    dispatch(search(value, () => setHidden(false), () => {}));
+  }, 300), []);
+
+  const handleSearch = useCallback((event) => {
+    const { target: { value } } = event;
+
+    setSearchTerm(value);
+    handleApiRequest(value);
+  }, [handleApiRequest]);
+
+  return (
+    <>
+      <Search ref={searchRef}>
+        <SearchIconWrapper>
+          <SearchIcon />
+        </SearchIconWrapper>
+        <StyledInputBase
+          placeholder="Search…"
+          inputProps={{ 'aria-label': 'search' }}
+          value={searchTerm}
+          onChange={handleSearch}
+        />
+      </Search>
+      <SearchMenu
+        handleMenuClose={handleMenuClose}
+        anchorEl={searchRef.current}
+        hide={hidden}
+      />
+    </>
+  );
+}
+
+export default SearchBar;
