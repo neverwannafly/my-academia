@@ -9,6 +9,7 @@ module Academia
         .joins(:user)
         .joins("LEFT OUTER JOIN user_classroom_progresses ON user_classroom_progresses.classroom_resource_id = classroom_resources.id AND user_classroom_progresses.user_id = #{@options[:user_id]}")
         .left_outer_joins(:comments)
+        .left_outer_joins(:likes)
         .where({ classroom_id: @options[:classroom_id] })
         .where({ classroom_resources: { status: :active } })
         .group("classroom_resources.id", "users.id", "user_classroom_progresses.id")
@@ -20,8 +21,10 @@ module Academia
           'classroom_resources.*',
           'users.username',
           'users.profile_pic',
-          'COUNT(comments.id) as comments_count',
+          'COUNT(distinct comments.id) as comments_count',
+          'COUNT(distinct likes.id) as likes_count',
           'user_classroom_progresses.score as score',
+          "bit_or(CAST (likes.user_id=#{@options[:user_id]} as integer)) as liked",
         )
         .order('classroom_resources.id DESC')
     end

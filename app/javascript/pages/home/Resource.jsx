@@ -1,17 +1,16 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { batch, useDispatch, useSelector } from 'react-redux';
 import classNames from 'classnames';
 import { useHistory } from 'react-router-dom';
 
 import { Chip, Divider, Paper } from '@mui/material';
-// import FavoriteIcon from '@mui/icons-material/Favorite';
-// import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import { setFabOpen, setFabState } from '@app/store/fab';
 import useMediaQuery from '@app/hooks/useMediaQuery';
-import { useMemo } from 'react';
-// import { toggleLike } from '@app/store/classroom';
+import { toggleLike } from '@app/store/classroom';
 
 function Resource({
   resource_type: resourceType,
@@ -19,11 +18,13 @@ function Resource({
   score,
   id,
   comments_count: commentsCount,
+  likes_count: likesCount,
   user_id: ownerId,
+  liked,
 }) {
   const history = useHistory();
   const dispatch = useDispatch();
-  // const { data: { id: classroomId } } = useSelector((state) => state.classroom);
+  const { data: { id: classroomId } } = useSelector((state) => state.classroom);
   const { id: userId } = useSelector((state) => state.user);
 
   const handleClick = useCallback(() => {
@@ -46,9 +47,9 @@ function Resource({
     return { flexBasis: '30%', marginRight: '1rem' };
   }, [isTablet]);
 
-  // const handleLike = useCallback(() => {
-  //   dispatch(toggleLike(classroomId, 'classroom_resource', id));
-  // }, [dispatch, id, classroomId]);
+  const handleLike = useCallback(() => {
+    dispatch(toggleLike(classroomId, 'classroom_resource', id));
+  }, [dispatch, id, classroomId]);
 
   return (
     <Paper
@@ -78,16 +79,16 @@ function Resource({
       <Divider />
       <div className="row p-10 space-between">
         <span className="row">
-          {/* <span
+          <span
             className="row m-r-10 align-items-center pointer"
             role="presentation"
             onClick={handleLike}
           >
-            {liked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            {liked ? <FavoriteIcon color="error" /> : <FavoriteBorderIcon color="error" />}
             {likesCount}
-          </span> */}
+          </span>
           <span className="row align-items-center">
-            <ChatBubbleOutlineOutlinedIcon />
+            <ChatBubbleOutlineOutlinedIcon color="info" />
             {commentsCount}
           </span>
         </span>
