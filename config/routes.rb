@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       get '/search', action: 'search'
       post '/like', action: 'handle_like'
 
+      resources :bookmarks, only: %i[index create]
       resources :stats, only: %i[index]
       resources :activities, only: %i[index]
 

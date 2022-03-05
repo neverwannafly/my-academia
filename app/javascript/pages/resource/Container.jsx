@@ -11,6 +11,7 @@ import { timeSince } from '@app/utils/datetime';
 
 import Header from './Header';
 import Discuss from './Discuss';
+import Bookmark from '@app/components/Bookmark';
 
 function Container({ isLoaded, resource }) {
   if (!isLoaded) {
@@ -43,11 +44,19 @@ function Container({ isLoaded, resource }) {
               </div>
             </div>
           </Link>
-          <Chip
-            label={resource.score ? 'Complete 🥳' : 'Pending'}
-            variant="outlined"
-            color={resource.score ? 'success' : 'warning'}
-          />
+          <div className="row align-items-center ">
+            <Bookmark
+              bookmarked={resource.bookmarked}
+              id={resource.id}
+              type="classroom_resource"
+              partial={false}
+            />
+            <Chip
+              label={resource.score ? 'Complete 🥳' : 'Pending'}
+              variant="outlined"
+              color={resource.score ? 'success' : 'warning'}
+            />
+          </div>
         </div>
         {(resource.content) && (
           <>

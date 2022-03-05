@@ -6,7 +6,7 @@ import { groupResourcesByDate } from '@app/utils/classroom';
 import { readableDate } from '@app/utils/datetime';
 import Resource from './Resource';
 
-function ResourcePresenter() {
+function ResourcePresenter({ bookmarked }) {
   const { data, isLoading } = useSelector((state) => state.resources);
   const groupedData = groupResourcesByDate(data);
 
@@ -20,9 +20,11 @@ function ResourcePresenter() {
         {readableDate(key)}
       </div>
       <div className="resource__item-container">
-        {groupedData[key].map((resource) => (
-          <Resource key={resource.id} {...resource} />
-        ))}
+        {groupedData[key]
+          .map((resource) => (
+            <Resource key={resource.id} {...resource} />
+          ))
+          .filter((resource) => !bookmarked || (bookmarked && resource.props.bookmarked > 0))}
       </div>
     </div>
   ));

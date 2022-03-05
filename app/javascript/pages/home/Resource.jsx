@@ -6,11 +6,13 @@ import { useHistory } from 'react-router-dom';
 import { Chip, Divider, Paper } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
+
 import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
 import ModeEditOutlinedIcon from '@mui/icons-material/ModeEditOutlined';
 import { setFabOpen, setFabState } from '@app/store/fab';
 import useMediaQuery from '@app/hooks/useMediaQuery';
 import { toggleLike } from '@app/store/classroom';
+import Bookmark from '@app/components/Bookmark';
 
 function Resource({
   resource_type: resourceType,
@@ -21,6 +23,7 @@ function Resource({
   likes_count: likesCount,
   user_id: ownerId,
   liked,
+  bookmarked,
 }) {
   const history = useHistory();
   const dispatch = useDispatch();
@@ -69,11 +72,14 @@ function Resource({
           >
             {title}
           </div>
-          <Chip
-            label={score ? 'Complete 🥳' : 'Pending'}
-            variant="outlined"
-            color={score ? 'success' : 'warning'}
-          />
+          <div className="row align-items-center ">
+            <Bookmark bookmarked={bookmarked} id={id} type="classroom_resource" />
+            <Chip
+              label={score ? 'Complete 🥳' : 'Pending'}
+              variant="outlined"
+              color={score ? 'success' : 'warning'}
+            />
+          </div>
         </div>
       </div>
       <Divider />

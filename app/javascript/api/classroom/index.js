@@ -1,5 +1,6 @@
 import apiRequest from '@app/lib/api';
 
+import bookmarks from './bookmarks';
 import comments from './comments';
 import resources from './resources';
 import activities from './activities';
@@ -26,6 +27,7 @@ const like = async (classroomId, likeableType, likeableId) => (
 
 export default {
   index,
+  bookmarks,
   search,
   like,
   activities,

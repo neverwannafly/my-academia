@@ -8,11 +8,12 @@ module Academia
       relation
         .joins(:user)
         .joins("LEFT OUTER JOIN user_classroom_progresses ON user_classroom_progresses.classroom_resource_id = classroom_resources.id AND user_classroom_progresses.user_id = #{@options[:user_id]}")
+        .joins("LEFT OUTER JOIN bookmarks ON bookmarks.bookmarkable_type = 'ClassroomResource' AND bookmarks.bookmarkable_id = classroom_resources.id AND bookmarks.status = 1")
         .left_outer_joins(:comments)
         .left_outer_joins(:likes)
         .where({ classroom_id: @options[:classroom_id] })
         .where({ classroom_resources: { status: :active } })
-        .group("classroom_resources.id", "users.id", "user_classroom_progresses.id")
+        .group("classroom_resources.id", "users.id", "user_classroom_progresses.id", "bookmarks.id")
     end
 
     def selector(current_query)
@@ -25,6 +26,7 @@ module Academia
           'COUNT(distinct likes.id) as likes_count',
           'user_classroom_progresses.score as score',
           "bit_or(CAST (likes.user_id=#{@options[:user_id]} as integer)) as liked",
+          "bookmarks.id as bookmarked",
         )
         .order('classroom_resources.id DESC')
     end

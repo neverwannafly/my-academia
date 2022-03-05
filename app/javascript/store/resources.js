@@ -11,6 +11,7 @@ const RESOURCE_UPDATE = 'RESOURCE_UPDATE';
 export const RESOURCE_FAIL = 'RESOURCE_FAIL';
 export const RESOURCE_ACTING = 'RESOURCE_ACTING';
 export const RESOURCE_LIKE = 'RESOURCE_LIKE';
+export const RESOURCE_BOOKMARKED = 'RESOURCE_BOOKMARKED';
 
 const initialState = {
   data: [],
@@ -89,6 +90,22 @@ export function markCompleted(classroomId, resourceId, afterComplete) {
   };
 }
 
+export function bookmarkResource(type, id) {
+  return async (dispatch, getState) => {
+    const { isActing } = getState().resources;
+    const { data: { id: classroomId } } = getState().classroom;
+
+    if (isActing) return;
+    dispatch({ type: RESOURCE_ACTING });
+    try {
+      await classroom.bookmarks.create(classroomId, type, id);
+      dispatch({ type: RESOURCE_BOOKMARKED, payload: { id } });
+    } catch (err) {
+      dispatch({ type: RESOURCE_FAIL, payload: err.message });
+    }
+  };
+}
+
 function addResourceToTop(state, payload) {
   const newState = Array.from(state);
   newState.unshift(payload);
@@ -112,6 +129,15 @@ function toggleContentLike(state, payload) {
   newState[index].liked = !newState[index].liked;
   newState[index].likes_count ||= 0;
   newState[index].likes_count += newState[index].liked ? 1 : -1;
+
+  return newState;
+}
+
+function toggleContentBookmark(state, payload) {
+  const newState = Array.from(state);
+  const { id } = payload;
+  const index = newState.findIndex((item) => item.id === Number(id));
+  newState[index].bookmarked = !newState[index].bookmarked;
 
   return newState;
 }
@@ -153,6 +179,10 @@ export default function (state = initialState, { type, payload }) {
     case RESOURCE_LIKE:
       return {
         ...state, data: toggleContentLike(state.data, payload), isActing: false,
+      };
+    case RESOURCE_BOOKMARKED:
+      return {
+        ...state, data: toggleContentBookmark(state.data, payload), isActing: false,
       };
     default:
       return { ...state };

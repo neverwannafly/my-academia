@@ -34,5 +34,17 @@ module Api
 
       head :ok
     end
+
+    private
+
+    def likeable_params
+      new_params = params.permit(:likeable_type, :likeable_id).merge({
+        user_id: current_user.id
+      })
+      head :forbidden and return unless ALLOWED_COMMENTABLES.include?(new_params[:likeable_type])
+
+      new_params[:likeable_type] = params[:likeable_type].classify
+      new_params
+    end
   end
 end
