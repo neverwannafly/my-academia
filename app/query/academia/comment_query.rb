@@ -7,7 +7,7 @@ module Academia
     def query
       relation
         .joins(:user)
-        .joins("LEFT OUTER JOIN bookmarks ON bookmarks.bookmarkable_type = 'Comment' AND bookmarks.bookmarkable_id = comments.id AND bookmarks.status = 1")
+        .joins("LEFT OUTER JOIN bookmarks ON bookmarks.bookmarkable_type = 'Comment' AND bookmarks.bookmarkable_id = comments.id AND bookmarks.status = 1  AND bookmarks.user_id = #{options[:user_id]}")
         .left_outer_joins(:likes)
         .where({ commentable: @options[:commentable], status: :active })
         .group("comments.id", "users.id", "bookmarks.id")

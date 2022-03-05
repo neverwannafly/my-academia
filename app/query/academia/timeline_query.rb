@@ -8,7 +8,7 @@ module Academia
       relation
         .joins(:user)
         .joins("LEFT OUTER JOIN user_classroom_progresses ON user_classroom_progresses.classroom_resource_id = classroom_resources.id AND user_classroom_progresses.user_id = #{@options[:user_id]}")
-        .joins("LEFT OUTER JOIN bookmarks ON bookmarks.bookmarkable_type = 'ClassroomResource' AND bookmarks.bookmarkable_id = classroom_resources.id AND bookmarks.status = 1")
+        .joins("LEFT OUTER JOIN bookmarks ON bookmarks.bookmarkable_type = 'ClassroomResource' AND bookmarks.bookmarkable_id = classroom_resources.id AND bookmarks.status = 1 AND bookmarks.user_id = #{options[:user_id]}")
         .left_outer_joins(:comments)
         .left_outer_joins(:likes)
         .where({ classroom_id: @options[:classroom_id] })
