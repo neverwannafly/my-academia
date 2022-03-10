@@ -5,11 +5,6 @@ Kimurai.configure do |config|
   config.log_level = :info
 
   if ENV["GOOGLE_CHROME_BIN"].present?
-    Selenium::WebDriver::Chrome.path = ENV["GOOGLE_CHROME_BIN"]
-    Selenium::WebDriver::Chrome::Service.driver_path = '/app/.chromedriver/bin/chromedriver'
-  end
-
-  if ENV["GOOGLE_CHROME_BIN"].present?
     config.selenium_chrome_path = ENV["GOOGLE_CHROME_BIN"]
   end
   
