@@ -1,11 +1,6 @@
 desc "Populate classroom resources links with necessary tags"
 
 task populate_tags: :environment do
-  if ENV["GOOGLE_CHROME_BIN"].present?
-    Selenium::WebDriver::Chrome.path = ENV["GOOGLE_CHROME_BIN"]
-    Selenium::WebDriver::Chrome::Service.driver_path = '/app/.chromedriver/bin/chromedriver'
-  end
-
   ClassroomResource.problem.all.each do |resource|
     next unless resource.link.match(/.*leetcode.com.*/)
 
