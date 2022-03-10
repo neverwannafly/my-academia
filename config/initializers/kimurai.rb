@@ -12,3 +12,13 @@ Kimurai.configure do |config|
     config.chromedriver_path = '/app/.chromedriver/bin/chromedriver'
   end
 end
+
+class Capybara::Driver::Base
+  def current_memory
+    if Rails.env.production?
+      return 0
+    end
+    
+    super
+  end
+end
