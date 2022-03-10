@@ -53,3 +53,4 @@ end
 gem 'jwt'
 gem 'listen', '~> 3.3'
 gem 'activerecord-import'
+gem 'kimurai'

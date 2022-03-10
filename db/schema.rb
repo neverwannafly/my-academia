@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_05_152941) do
+ActiveRecord::Schema.define(version: 2022_03_10_044203) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,6 +95,25 @@ ActiveRecord::Schema.define(version: 2022_03_05_152941) do
     t.index ["user_id"], name: "index_likes_on_user_id"
   end
 
+  create_table "tag_associations", force: :cascade do |t|
+    t.bigint "tag_id"
+    t.string "taggable_type"
+    t.integer "taggable_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["tag_id"], name: "index_tag_associations_on_tag_id"
+    t.index ["taggable_type", "taggable_id"], name: "index_tag_associations_on_taggable_type_and_taggable_id"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.integer "status"
+    t.integer "tag_type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_tags_on_name", unique: true
+  end
+
   create_table "user_classroom_progresses", force: :cascade do |t|
     t.bigint "user_id"
     t.bigint "classroom_resource_id"
@@ -118,4 +137,5 @@ ActiveRecord::Schema.define(version: 2022_03_05_152941) do
     t.index ["username"], name: "index_users_on_username", unique: true
   end
 
+  add_foreign_key "tag_associations", "tags"
 end
