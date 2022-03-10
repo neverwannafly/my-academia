@@ -13,12 +13,24 @@ Kimurai.configure do |config|
   end
 end
 
-class Capybara::Driver::Base
-  def current_memory
-    if Rails.env.production?
-      return 0
+Kimurai::BrowserBuilder.module_eval do
+  def self.new_build(engine, config = {}, spider:)
+    browser = build(engine, config, spider: spider)
+
+    browser.driver.instance_eval {
+      def current_memory
+        return 0
+      end
+    }
+
+    return browser
+  end
+end
+
+module Kimurai
+  class Base
+    def browser
+      @browser ||= BrowserBuilder.new_build(@engine, @config, spider: self)
     end
-    
-    super
   end
 end
