@@ -2,6 +2,7 @@ desc "Populate classroom resources links with necessary tags"
 
 task populate_tags: :environment do
   ClassroomResource.problem.all.each do |resource|
+    next if resource.tags.length > 0
     next unless resource.link.match(/.*leetcode.com.*/)
 
     WebScrapper.class_eval { @start_urls = [resource.link] }
