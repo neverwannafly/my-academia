@@ -1,5 +1,3 @@
-puts 'hello'
-
 Kimurai.configure do |config|
   config.colorize_logger = true
   config.log_level = :info

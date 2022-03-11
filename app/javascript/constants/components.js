@@ -1,16 +1,65 @@
+/* eslint-disable import/prefer-default-export */
 import { unsetUser } from '@app/store/user';
 
-// eslint-disable-next-line import/prefer-default-export
-export const MENU_ITEMS = [{
-  label: 'Profile',
-  onClick: ({ history }) => {
-    history.push('/profile');
+export const HEADER_ITEMS = [
+  {
+    label: 'Profile',
+    url: '/profile',
   },
-},
-{
-  label: 'Logout',
-  onClick: ({ dispatch, history }) => {
-    dispatch(unsetUser());
-    history.push('/');
+  {
+    label: 'Mock tests',
+    url: '/mock-test',
   },
-}];
+  {
+    label: 'Ide',
+    url: '/ide',
+  },
+];
+
+export const MENU_ITEMS = [
+  {
+    label: 'Profile',
+    onClick: ({ history }) => {
+      history.push('/profile');
+    },
+  },
+  {
+    label: 'IDE',
+    onClick: ({ history }) => {
+      history.push('/ide');
+    },
+  },
+  {
+    label: 'Logout',
+    onClick: ({ dispatch, history }) => {
+      dispatch(unsetUser());
+      history.push('/');
+    },
+  },
+];
+
+export const FILTER_STATES = [
+  {
+    id: 1,
+    name: 'bookmarked',
+  },
+  {
+    id: 2,
+    name: 'complete',
+  },
+  {
+    id: 3,
+    name: 'incomplete',
+  },
+];
+
+export const FILTER_TYPES = [
+  {
+    id: 1,
+    name: 'problem',
+  },
+  {
+    id: 2,
+    name: 'article',
+  },
+];

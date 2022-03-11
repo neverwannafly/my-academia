@@ -11,6 +11,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 
 import Menu from './Menu';
 import Search from './Search';
+import { HEADER_ITEMS } from '@app/constants/components';
 
 function Header() {
   const history = useHistory();
@@ -35,12 +36,25 @@ function Header() {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            <div
-              className="pointer"
-              role="presentation"
-              onClick={() => history.push('/')}
-            >
-              {title || 'My Classroom'}
+            <div className="row" style={{ alignItems: 'center' }}>
+              <div
+                className="pointer"
+                role="presentation"
+                onClick={() => history.push('/')}
+              >
+                {title || 'My Classroom'}
+              </div>
+              {HEADER_ITEMS.map(({ url, label }) => (
+                <div
+                  key={label}
+                  className="pointer m-l-10"
+                  style={{ fontSize: '1rem' }}
+                  role="presentation"
+                  onClick={() => history.push(url)}
+                >
+                  {label}
+                </div>
+              ))}
             </div>
           </Typography>
           <Search />

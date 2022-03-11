@@ -73,7 +73,12 @@ function Resource({
             {title}
           </div>
           <div className="row align-items-center ">
-            <Bookmark bookmarked={bookmarked} id={id} type="classroom_resource" />
+            <Bookmark
+              bookmarked={bookmarked}
+              id={id}
+              type="classroom_resource"
+              clickable={false}
+            />
             <Chip
               label={score ? 'Complete 🥳' : 'Pending'}
               variant="outlined"

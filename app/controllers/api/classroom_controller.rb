@@ -3,10 +3,10 @@ module Api
     include ClassroomConcern
 
     before_action :validate_user
-    before_action :set_classroom, except: %i[quote]
+    before_action :set_classroom
 
     def index
-      json_response(@classroom)
+      json_response({ classroom: @classroom, tags: Tag.generic.all })
     end
 
     def quote

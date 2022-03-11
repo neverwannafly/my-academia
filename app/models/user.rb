@@ -10,4 +10,10 @@ class User < ApplicationRecord
   has_many :comments
   has_many :likes
   has_many :activites, as: :owner
+
+  after_create :assign_classroom
+
+  def assign_classroom
+    self.classrooms << Classroom.find_by_title(Classroom::DEFAULT_CLASSROOM)
+  end
 end

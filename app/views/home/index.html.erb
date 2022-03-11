@@ -10,7 +10,8 @@
       time: '<%= DateTime.now.to_s %>',
       profilePic: '<%= @current_user&.profile_pic || '' %>',
     },
-    classroom: <%= raw @current_user&.classrooms&.last&.to_json || {} %>
+    classroom: <%= raw @current_user&.classrooms&.last&.to_json || {} %>,
+    tags: <%= raw Tag.generic.all.to_json || [] %>
   };
 
   window.ENV_VARS = {

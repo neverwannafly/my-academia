@@ -12,6 +12,7 @@ const SEARCH_DONE = 'SEARCH_DONE';
 
 const initialState = {
   data: importStoreFromWindow('classroom', {}),
+  tags: importStoreFromWindow('tags', []),
   isLoading: false,
   error: null,
   isSearching: false,
@@ -84,7 +85,9 @@ export default function (state = initialState, { type, payload }) {
     case CLASSROOM_INIT:
       return { ...state, isLoading: true, error: null };
     case CLASSROOM_LOAD:
-      return { ...state, isLoading: false, data: payload };
+      return {
+        ...state, isLoading: false, data: payload.classroom, tags: payload.tags,
+      };
     case CLASSROOM_FAIL:
       return { ...state, isLoading: false, error: payload };
     case SEARCH_INIT:
