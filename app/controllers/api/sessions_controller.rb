@@ -14,7 +14,7 @@ module Api
           id: user.id,
         })
       else
-        json_response({ error: user&.errors })
+        json_response({ error: 'Invalid username or password' })
       end
     end
 

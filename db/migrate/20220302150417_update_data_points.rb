@@ -1,9 +1,9 @@
 class UpdateDataPoints < ActiveRecord::Migration[6.1]
   def change
     classroom = Classroom.first
-    users = classroom.users
+    users = classroom&.users || []
     
-    classroom.classroom_resources.each do |resource|
+    classroom&.classroom_resources&.each do |resource|
       # Update progress of users
       users.each do |user|
         ucp = user.user_classroom_progresses.where(classroom_resource_id: resource.id).first
