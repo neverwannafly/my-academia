@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :comments
   has_many :likes
   has_many :activites, as: :owner
+  has_many :tasks
 
   after_create :assign_classroom
 

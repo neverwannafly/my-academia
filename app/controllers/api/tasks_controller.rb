@@ -7,7 +7,7 @@ module Api
     before_action :set_task, only: %i[update destroy]
 
     def index
-      json_response(Task.all)
+      json_response(Task.where(classroom_id: @classroom.id, user_id: current_user.id))
     end
 
     def create
@@ -15,7 +15,8 @@ module Api
         classroom_id: @classroom.id,
         content: '',
         status: :pending,
-        deadline: DateTime.now
+        deadline: DateTime.now,
+        user_id: current_user.id
       }))
 
       json_response(task.as_json)
@@ -42,6 +43,7 @@ module Api
     def set_task
       @task = Task.find_by_id(params[:id])
       head :not_found and return unless @task.present?
+      head :forbidden and return unless @task.user_id == current_user.id
     end
   end
 end
