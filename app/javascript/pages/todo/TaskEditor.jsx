@@ -28,8 +28,10 @@ function TaskEditor({
     let value;
     if (key === 'status') {
       value = event.target.checked ? 'complete' : 'pending';
+    } else if (event?.target?.value === null || event?.target?.value === undefined) {
+      value = event;
     } else {
-      value = event?.target?.value || event;
+      value = event.target.value;
     }
 
     if (value !== state[key]) {

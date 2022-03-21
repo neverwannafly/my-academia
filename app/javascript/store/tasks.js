@@ -40,8 +40,8 @@ export const newTask = () => async (dispatch, getState) => {
 
   dispatch({ type: TASKS_ACTING });
   try {
-    const { id } = await classroom.tasks.create(classroomId);
-    dispatch({ type: TASKS_CREATE, payload: id });
+    const payload = await classroom.tasks.create(classroomId);
+    dispatch({ type: TASKS_CREATE, payload });
   } catch (err) {
     dispatch({ type: TASKS_FAIL, payload: err.message });
   }
@@ -65,7 +65,7 @@ export const updateTask = (taskId, payload) => async (dispatch, getState) => {
 };
 
 function upsert(state, payload) {
-  const newState = [...payload, ...state];
+  const newState = [payload, ...state];
 
   return newState;
 }

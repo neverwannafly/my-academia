@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { useSelector } from 'react-redux';
 
 import { CircularProgress } from '@mui/material';
@@ -6,7 +6,12 @@ import TaskEditor from './TaskEditor';
 
 function Body() {
   const { data, isLoading } = useSelector((state) => state.tasks);
-  const overdued = data.filter((row) => new Date(row.deadline) < new Date() && row.status === 'pending');
+  const currentDate = useMemo(() => {
+    const date = new Date();
+    date.setHours(0, 0, 0, 0);
+    return date;
+  }, []);
+  const overdued = data.filter((row) => new Date(row.deadline) <= currentDate && row.status === 'pending');
   const pending = data.filter((row) => row.status === 'pending');
   const complete = data.filter((row) => row.status === 'complete');
 
