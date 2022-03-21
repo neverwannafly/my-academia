@@ -11,7 +11,11 @@ export const HEADER_ITEMS = [
     url: '/mock-test',
   },
   {
-    label: 'Ide',
+    label: 'Todo',
+    url: '/todo',
+  },
+  {
+    label: 'IDE',
     url: '/ide',
   },
 ];
@@ -21,6 +25,12 @@ export const MENU_ITEMS = [
     label: 'Profile',
     onClick: ({ history }) => {
       history.push('/profile');
+    },
+  },
+  {
+    label: 'Todo',
+    onClick: ({ history }) => {
+      history.push('/todo');
     },
   },
   {

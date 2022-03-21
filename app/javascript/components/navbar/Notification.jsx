@@ -56,6 +56,11 @@ function Notification() {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose()}
       >
+        {(!data || data.length === 0) && (
+          <MenuItem sx={{ whiteSpace: 'break-spaces' }}>
+            No notifications to show 🚀
+          </MenuItem>
+        )}
         {data.map((activity) => {
           const {
             text, link, profilePic, time, activityId,

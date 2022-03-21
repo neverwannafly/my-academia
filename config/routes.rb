@@ -15,6 +15,7 @@ Rails.application.routes.draw do
       resources :bookmarks, only: %i[index create]
       resources :stats, only: %i[index]
       resources :activities, only: %i[index]
+      resources :tasks, only: %i[index create update destroy]
 
       resources :resources, only: %i[index create destroy update] do
         post '/mark_completed', action: 'mark_completed'

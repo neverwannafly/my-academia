@@ -9,6 +9,7 @@ const AboutPage = lazy(() => import('@app/pages/about'));
 const AuthPage = lazy(() => import('@app/pages/auth'));
 const ResourcePage = lazy(() => import('@app/pages/resource'));
 const ProfilePage = lazy(() => import('@app/pages/profile'));
+const TodoPage = lazy(() => import('@app/pages/todo'));
 const IdePage = lazy(() => import('@app/pages/ide'));
 
 function AppRouter() {
@@ -36,6 +37,11 @@ function AppRouter() {
       <Route
         path="/ide"
         component={IdePage}
+        exact
+      />
+      <Route
+        path="/todo"
+        component={TodoPage}
         exact
       />
       <Route

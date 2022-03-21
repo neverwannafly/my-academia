@@ -81,7 +81,7 @@ function SearchMenu({
       onClose={handleMenuClose()}
     >
       {searchables.length === 0 && (
-        <p className="p-10">Nothing to show here! 🤔</p>
+        <div className="p-10">Nothing to show here! 🤔</div>
       )}
       {searchables.map(({
         id,

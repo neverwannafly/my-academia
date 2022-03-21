@@ -5,6 +5,7 @@ import comments from './comments';
 import resources from './resources';
 import activities from './activities';
 import stats from './stats';
+import tasks from './tasks';
 
 const index = async () => (
   apiRequest('GET', '/api/classroom')
@@ -35,4 +36,5 @@ export default {
   comments,
   resources,
   stats,
+  tasks,
 };

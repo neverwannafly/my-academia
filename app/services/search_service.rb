@@ -3,6 +3,7 @@ class SearchService < ::ServiceBase
 
   def initialize(*args)
     @search_term = args[0][:search_term]
+    @only_resources = args[0][:only_resources]
   end
 
   def execute
@@ -14,7 +15,11 @@ class SearchService < ::ServiceBase
   private
 
   def relevant_searches
-    comments + resources
+    if @only_resources
+      resources
+    else
+      comments + resources
+    end
   end
 
   def comments
